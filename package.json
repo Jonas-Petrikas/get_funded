@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/Jonas-Petrikas/get_funded#readme",
   "dependencies": {
-    "@faker-js/faker": "^9.5.1"
+    "@faker-js/faker": "^9.5.1",
+    "md5": "^2.3.0",
+    "mysql": "^2.18.1"
   }
 }
