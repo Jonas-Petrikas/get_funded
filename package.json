@@ -1,0 +1,29 @@
+{
+  "name": "get_funded",
+  "version": "1.0.0",
+  "description": "Final project - creating funding page with MySQL, React, admin and user offices",
+  "main": "index.js",
+  "scripts": {
+    "seed": "node ./seeder/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonas-Petrikas/get_funded.git"
+  },
+  "keywords": [
+    "mysql",
+    "funding",
+    "React",
+    "front-end",
+    "back-end"
+  ],
+  "author": "Jonas Petrikas (https://github.com/Jonas-Petrikas)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jonas-Petrikas/get_funded/issues"
+  },
+  "homepage": "https://github.com/Jonas-Petrikas/get_funded#readme",
+  "dependencies": {
+    "@faker-js/faker": "^9.5.1"
+  }
+}
