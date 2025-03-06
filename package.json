@@ -1,6 +1,7 @@
 {
   "name": "get_funded",
   "version": "1.0.0",
+  "type": "module",
   "description": "Final project - creating funding page with MySQL, React, admin and user offices",
   "main": "index.js",
   "scripts": {

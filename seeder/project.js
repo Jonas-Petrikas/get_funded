@@ -13,18 +13,18 @@
 import { faker } from '@faker-js/faker';
 
 
-export function createProjects() {
-    const goal = faker.number.int({ min: 100, max: 999999999 })
+export function createProject() {
+    const goal = faker.number.int({ min: 100, max: 9999999 })
     return {
         title: faker.word.words({ count: { min: 2, max: 7 } }),
         content: faker.word.words({ count: { min: 10, max: 100 } }),
         // user_id
         image: faker.image.url(),
         amount_goal: goal,
-        amount_collected: faker.number.int({ min: 100, max: goal }),
+        amount_collected: 0,
         created_at: faker.date.past({ years: 2 }),
         updated_at: faker.date.recent({ days: 30 }),
-        status: faker.helpers.arrayElement(['to_review', 'approved', 'disapproved', 'done'])
+        status: faker.helpers.arrayElement(['to_review', 'approved', 'approved', 'disapproved', 'done'])
     }
 
 }

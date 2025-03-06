@@ -1,25 +1,49 @@
 console.log('start seeding');
 
 import { faker } from '@faker-js/faker';
-import { createUser } from './users.js';
+import { createUser } from './user.js';
 import mysql from 'mysql';
-import { createProjects } from './projects.js';
+import { createProject } from './project.js';
 
 
 const usersCount = 100;
 const projectsCount = 14;
 
 
+
 const users = faker.helpers.multiple(createUser, { count: usersCount });
 
-const projects = faker.helpers.multiple(createProjects, { count: projectsCount });
+const projects = faker.helpers.multiple(createProject, { count: projectsCount });
 
-projects.forEach(project => {
+const donations = [];
+
+projects.forEach((project, i) => {
     project.user_id = faker.number.int({ min: 1, max: usersCount });
+
+    const donationsCount = faker.number.int({ min: 0, max: 10 })
+    let totalProjectDonation = 0;
+    for (let j = 0; j < donationsCount; j++) {
+        const donationAmount = faker.number.int({ min: 1, max: (project.amount_goal / 10) });
+
+        if (project.amount_collected + donationAmount < project.amount_goal && project.status === 'approved') {
+            donations.push(
+                {
+                    project_id: i + 1,
+                    amount: project.amount_collected + donationAmount,
+                    donated_at: faker.date.between({ from: project.created_at, to: new Date() }),
+                    user_id: faker.number.int({ min: 1, max: usersCount })
+                })
+            totalProjectDonation = (totalProjectDonation + donationAmount);
+        } else if (project.status === 'done') {
+            totalProjectDonation = project.amount_goal;
+        }
+
+
+    }
+    project.amount_collected = totalProjectDonation;
+
 })
 
-
-console.log(projects);
 
 const con = mysql.createConnection({
     host: 'localhost',
@@ -33,7 +57,30 @@ con.connect(function (err) {
     console.log("Connected!");
 });
 
+
+
 let sql = '';
+
+sql = 'DROP TABLE IF EXISTS sessions;';
+
+con.query(sql, (err) => {
+    if (err) {
+        console.log('Sessions table dropping fail', err)
+    } else {
+        console.log('Sessions table dropping success')
+    }
+});
+
+sql = 'DROP TABLE IF EXISTS donations;';
+
+con.query(sql, (err) => {
+    if (err) {
+        console.log('Donations table dropping fail', err)
+    } else {
+        console.log('Donations table dropping success')
+    }
+});
+
 sql = 'DROP TABLE IF EXISTS projects;';
 
 con.query(sql, (err) => {
@@ -96,6 +143,39 @@ con.query(sql, (err) => {
 });
 
 sql = `
+CREATE TABLE donations (
+  id int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  project_id int(10) UNSIGNED NOT NULL,
+  amount mediumint(7) UNSIGNED NOT NULL,
+  donated_at date NOT NULL DEFAULT current_timestamp(),
+  user_id int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+`
+
+con.query(sql, (err) => {
+    if (err) {
+        console.log('Donations table create fail', err)
+    } else {
+        console.log('Donations table create success')
+    }
+});
+
+sql = `CREATE TABLE sessions (
+  id int(10) UNSIGNED NOT NULL,
+  user_id int(10) UNSIGNED NOT NULL,
+  token char(32) NOT NULL,
+  valid_until date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+`;
+con.query(sql, (err) => {
+    if (err) {
+        console.log('Sessions table create fail', err)
+    } else {
+        console.log('Sessions table create success')
+    }
+});
+
+sql = `
     INSERT INTO users
     (name, password, email, role)
     VALUES ?
@@ -118,6 +198,20 @@ con.query(sql, [projects.map(project => [project.title, project.content, project
         console.log('projects table seed error', err)
     } else {
         console.log('projects table was seeded')
+    }
+});
+
+sql = `
+    INSERT INTO donations
+    (project_id, amount, donated_at, user_id)
+    VALUES ?
+`;
+
+con.query(sql, [donations.map(donation => [donation.project_id, donation.amount, donation.donated_at, donation.user_id])], (err) => {
+    if (err) {
+        console.log('Donations table seed error', err)
+    } else {
+        console.log('Donations table was seeded')
     }
 });
 
