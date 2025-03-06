@@ -7,7 +7,7 @@ import { createProject } from './project.js';
 
 
 const usersCount = 100;
-const projectsCount = 14;
+const projectsCount = 25;
 
 
 
@@ -22,24 +22,26 @@ projects.forEach((project, i) => {
 
     const donationsCount = faker.number.int({ min: 0, max: 10 })
     let totalProjectDonation = 0;
-    for (let j = 0; j < donationsCount; j++) {
-        const donationAmount = faker.number.int({ min: 1, max: (project.amount_goal / 10) });
 
-        if (project.amount_collected + donationAmount < project.amount_goal && project.status === 'approved') {
-            donations.push(
-                {
-                    project_id: i + 1,
-                    amount: project.amount_collected + donationAmount,
-                    donated_at: faker.date.between({ from: project.created_at, to: new Date() }),
-                    user_id: faker.number.int({ min: 1, max: usersCount })
-                })
-            totalProjectDonation = (totalProjectDonation + donationAmount);
-        } else if (project.status === 'done') {
-            totalProjectDonation = project.amount_goal;
+
+    if (project.status === 'approved') {
+        for (let j = 0; j < donationsCount; j++) {
+            const donationAmount = faker.number.int({ min: 1, max: (project.amount_goal / 10) });
+            if (project.amount_collected + donationAmount < project.amount_goal) {
+                donations.push(
+                    {
+                        project_id: i + 1,
+                        amount: project.amount_collected + donationAmount,
+                        donated_at: faker.date.between({ from: project.created_at, to: new Date() }),
+                        user_id: faker.number.int({ min: 1, max: usersCount })
+                    })
+                totalProjectDonation = (totalProjectDonation + donationAmount);
+            }
         }
-
-
+    } else if (project.status === 'done') {
+        totalProjectDonation = project.amount_goal;
     }
+
     project.amount_collected = totalProjectDonation;
 
 })

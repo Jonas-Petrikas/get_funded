@@ -1,0 +1,33 @@
+section.header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #007bff;
+    height: fit-content;
+    position: fixed;
+
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 30px;
+    background-color: #007bff;
+    color: white;
+    max-width: 1260px;
+    width: 100%;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.fundraise-btn {
+    border: 3px solid white;
+    padding: 3px 12px;
+    border-radius: 10px;
+}
