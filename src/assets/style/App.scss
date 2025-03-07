@@ -1,0 +1,99 @@
+@use "./var.scss" as v;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: v.$grey-bg;
+  font-size: 16px;
+}
+
+button {
+  background-color: transparent;
+  border-radius: 7px;
+  color: v.$black;
+  padding: 3px 7px;
+  font-size: 16px;
+  border: 2px solid;
+  cursor: pointer;
+}
+
+.bin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+
+  &.shadow {
+    box-shadow: 4px 4px 20px -5px rgba(0, 0, 0, 0.37);
+
+  }
+
+
+  &.bin-20 {
+    width: 20%;
+  }
+
+  &.bin-30 {
+    width: 30%;
+  }
+
+  &.bin-40 {
+    width: 40%;
+  }
+
+  &.bin-50 {
+    width: 50%;
+  }
+
+  &.bin-60 {
+    width: 60%;
+  }
+
+  &.bin-70 {
+    width: 70%;
+  }
+
+  &.bin-80 {
+    width: 80%;
+  }
+}
+
+.wrapper {
+  max-width: v.$xl;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: v.$white;
+  padding: 30px 50px 100px 50px;
+
+  &.shadow {
+    box-shadow: 4px 4px 20px -5px rgba(0, 0, 0, 0.37);
+
+  }
+}
+
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+.about-columns {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}

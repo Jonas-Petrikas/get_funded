@@ -1,30 +1,19 @@
-import './Components-style/Header.css';
+import './Components-style/Header.scss';
 import logo from '../assets/images/logo.svg';
+import NavLeft from './NavLeft';
+import NavRight from './NavRight';
+import { NavLink } from 'react-router';
 
 export default function Header() {
     return (
         <section className="header">
             <header>
-
-                <nav>
-                    <a className='fundraise-btn' href="#">FUNDRAISE</a>
-                    <a href="#">DONATE</a>
-                    <a href="#"> Search</a>
-
-
-                </nav>
-
+                <NavLeft />
                 <div className="logo">
-                    <img src={logo} alt="getFunded logo" />
+                    <NavLink to="/" end><img src={logo} alt="getFunded logo" /> </NavLink>
                 </div>
-                <nav>
-
-                    <a href="#">ABOUT</a>
-                    <a href="#">CONTACTS</a>
-                    <a href="#">USER MENU</a>
-                </nav>
+                <NavRight />
             </header>
-
         </section>
 
 
