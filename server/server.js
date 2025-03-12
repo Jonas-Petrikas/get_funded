@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
 const port = 3333;
-const frontURL = 'http://localhost:5173/';
+const frontURL = 'http://localhost:5173';
 const serverUrl = `http://localhost:${port}/`;
 
 app.use(cookieParser());
@@ -37,31 +37,33 @@ con.connect(err => {
     console.log('Prisijungimas prie DB buvo sėkmingas');
 });
 
+const error500 = (res, err) => res.status(500).json(err);
+
 //auth middleware
-app.use((req, res, next) => {
-    const token = req.cookies['r2-token'] || 'no-token';
-    const sql = 'SELECT * FROM users WHERE session_id = ?'; // TODO pataisyt
-    con.query(sql, [token], (err, result) => {
-        if (err) {
-            res.status(500).send('Klaida bandant prisijungti');
-            return;
-        }
-        if (result.length === 0) {
-            req.user = {
-                role: 'guest',
-                name: 'Guest',
-                id: 0
-            }
-        } else {
-            req.user = {
-                role: result[0].role,
-                name: result[0].name,
-                id: result[0].id
-            }
-        }
-        next();
-    });
-});
+// app.use((req, res, next) => {
+//     const token = req.cookies['r2-token'] || 'no-token';
+//     const sql = 'SELECT * FROM users WHERE session_id = ?'; // TODO pataisyt
+//     con.query(sql, [token], (err, result) => {
+//         if (err) {
+//             res.status(500).send('Klaida bandant prisijungti');
+//             return;
+//         }
+//         if (result.length === 0) {
+//             req.user = {
+//                 role: 'guest',
+//                 name: 'Guest',
+//                 id: 0
+//             }
+//         } else {
+//             req.user = {
+//                 role: result[0].role,
+//                 name: result[0].name,
+//                 id: result[0].id
+//             }
+//         }
+//         next();
+//     });
+// });
 
 
 app.post('/login', (req, res) => {
@@ -153,8 +155,24 @@ app.post('/logout', (req, res) => {
 
 
 
+//PROJECTS
+app.get('/projects/confirmed-list', (req, res) => {
+    const sql = `
+    SELECT id, title, image, amount_goal, amount_collected
+    FROM projects
+        WHERE status = 'approved'
 
+`;
 
+    // WHERE status = approved
+    con.query(sql, (err, result) => {
+        if (err) return error500(res, err);
+        res.json({
+            success: true,
+            db: result
+        });
+    });
+});
 
 
 

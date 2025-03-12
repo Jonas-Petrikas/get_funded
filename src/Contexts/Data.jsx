@@ -1,15 +1,16 @@
 import { createContext } from 'react';
+import useProjects from '../Hooks/useProjects';
 
 const Data = createContext();
 
 
 export const DataProvider = ({ children }) => {
 
-    const dalykas = 'dalykas';
+    const { projects, dispatchProjects } = useProjects();
 
     return (
         <Data.Provider value={{
-            dalykas
+            projects, dispatchProjects
         }}>
             {children}
         </Data.Provider>
