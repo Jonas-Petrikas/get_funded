@@ -10,7 +10,10 @@ export default function useProjects() {
     useEffect(_ => {
         axios.get(C.SERVER_URL + 'projects/confirmed-list')
             .then(res => {
-                console.log(res.data.db);
+                dispatchProjects({
+                    type: A.LOAD_CONFIRMED_PROJECTS_FROM_SERVER, // tipas ka daryt
+                    payload: res.data.db // payloadas su kuo tai daryt
+                });
             })
             .catch(error => {
                 console.log(error)

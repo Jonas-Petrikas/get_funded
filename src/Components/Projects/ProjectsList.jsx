@@ -1,12 +1,14 @@
 import ProjectItem from "./ProjectItem";
-import './Components-style/ProjectsList.scss';
-import { faker } from "@faker-js/faker";
+import '../Components-style/ProjectsList.scss';
 import { useContext } from "react";
-import Data from "../Contexts/Data";
+import Data from "../../Contexts/Data";
 
 export default function ProjectsList() {
 
-    const { projects } = useContext(Data)
+    const { projects } = useContext(Data);
+
+
+
     if (projects === null) {
         return (
             <div className="bin wrapper">
@@ -15,9 +17,21 @@ export default function ProjectsList() {
         );
     }
 
+
+
     return (
         <section className="projects-list">
-            <ProjectItem title='sample project #1' fullAmount={faker.number.int({ min: 100, max: 200 })} collectedAmount={faker.number.int({ min: 10, max: 100 })} image={faker.image.url()} />
+            {
+                projects.map(p => <ProjectItem key={p.id} id={p.id} title={p.title} fullAmount={p.amount_goal} collectedAmount={p.amount_collected} image={p.image} />)
+                // 
+
+
+
+
+
+            }
+
+
         </section>
     )
 };

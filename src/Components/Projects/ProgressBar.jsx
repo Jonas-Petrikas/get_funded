@@ -1,4 +1,4 @@
-import './Components-style/ProgressBar.scss'
+import '../Components-style/ProgressBar.scss'
 
 export default function ProgressBar({ fullAmount, collectedAmount }) {
     const progress = `${collectedAmount / fullAmount * 100}%`

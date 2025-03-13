@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+a {
+  color: v.$black;
+  text-decoration: none;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;

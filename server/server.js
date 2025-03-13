@@ -158,14 +158,42 @@ app.post('/logout', (req, res) => {
 //PROJECTS
 app.get('/projects/confirmed-list', (req, res) => {
     const sql = `
-    SELECT id, title, image, amount_goal, amount_collected
+    SELECT id, title, content, image, amount_goal, amount_collected
     FROM projects
         WHERE status = 'approved'
 
 `;
 
-    // WHERE status = approved
     con.query(sql, (err, result) => {
+        if (err) return error500(res, err);
+        res.json({
+            success: true,
+            db: result
+        });
+    });
+});
+
+//DONATIONS
+app.get('/donations/home-show-latest', (req, res) => {
+    const sql = `
+    SELECT d.id, d.amount, d.donated_at, d.project_id, u.name, p.title, p.amount_goal, p.amount_collected
+    FROM donations AS d
+    INNER JOIN users AS u
+    ON u.id = d.user_id
+    INNER JOIN projects AS p
+    ON p.id = d.project_id
+    ORDER BY d.donated_at DESC
+    LIMIT ?
+
+  
+
+`;
+    // 
+
+
+
+
+    con.query(sql, [10], (err, result) => {
         if (err) return error500(res, err);
         res.json({
             success: true,

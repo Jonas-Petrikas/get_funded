@@ -1,12 +1,11 @@
-import ProjectsList from "../Components/ProjectsList";
+import ProjectsList from "../Components/Projects/ProjectsList";
 
 export default function Projects() {
     return (
         <>
             <div className="bin">
                 <div className="wrapper shadow">
-                    <h1>Laba diena!</h1>
-                    <h2>Visi projektai</h2>
+                    <h1>All projects:</h1>
                     <ProjectsList />
 
                 </div>
