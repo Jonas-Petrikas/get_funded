@@ -4,7 +4,7 @@ import './Components-style/Nav.scss'
 export default function NavLeft() {
     return (
         <nav>
-            <a className='fundraise-btn' href="#">FUNDRAISE</a>
+            <NavLink className='fundraise-btn' to="/create" end>FUNDRAISE</NavLink>
             <NavLink to="/projects" end>DONATE</NavLink>
 
             <a href="#"> Search</a>

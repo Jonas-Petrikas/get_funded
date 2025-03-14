@@ -7,6 +7,7 @@ import About from './Pages/About'
 import { DataProvider } from './Contexts/Data'
 import Page404 from './Pages/Page404'
 import Footer from './Components/Footer'
+import Create from './Pages/Create'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/create" element={<Create />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Page404 />} />
       </Routes>

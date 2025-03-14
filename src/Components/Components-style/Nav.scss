@@ -3,6 +3,12 @@ nav a {
     text-decoration: none;
     color: white;
     font-weight: bold;
+    position: relative;
+
+}
+
+nav a:hover {
+    transform: scaleX(2);
 }
 
 .fundraise-btn {
