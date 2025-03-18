@@ -8,6 +8,7 @@ import { DataProvider } from './Contexts/Data'
 import Page404 from './Pages/Page404'
 import Footer from './Components/Footer'
 import Create from './Pages/Create'
+import Login from './Pages/Login'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Page404 />} />
       </Routes>

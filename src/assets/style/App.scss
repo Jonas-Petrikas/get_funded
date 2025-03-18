@@ -1,4 +1,6 @@
 @use "./var.scss" as v;
+@use '../../Components/Components-style/LoginForm.scss';
+@use '../../Components/Components-style/CreateForm.scss';
 
 * {
   padding: 0;

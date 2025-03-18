@@ -1,4 +1,3 @@
-import './Components-style/CreateForm.scss';
 // import { NavLink } from 'react-router';
 
 export default function CreateForm() {

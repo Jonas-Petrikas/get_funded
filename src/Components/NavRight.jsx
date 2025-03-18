@@ -6,7 +6,7 @@ export default function NavRight() {
         <nav>
             <NavLink to='/about' end>ABOUT</NavLink>
             <NavLink to='/contacts' end>CONTACTS</NavLink>
-            <a href="#"> User menu</a>
+            <NavLink to='/login' end> User menu</NavLink>
         </nav>
     )
 }
