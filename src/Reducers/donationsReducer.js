@@ -1,4 +1,4 @@
-import * as A from '../Constants/actions'
+import * as A from '../Constants/actions';
 
 export default function donationsReducer(state, action) {
 

@@ -3,7 +3,7 @@ import mysql from 'mysql';
 import cors from 'cors';
 import md5 from 'md5';
 import cookieParser from 'cookie-parser';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 } from 'uuid';
 
 const app = express();
 const port = 3333;
@@ -39,56 +39,72 @@ con.connect(err => {
 
 const error500 = (res, err) => res.status(500).json(err);
 
-//auth middleware
-// app.use((req, res, next) => {
-//     const token = req.cookies['r2-token'] || 'no-token';
-//     const sql = 'SELECT * FROM users WHERE session_id = ?'; // TODO pataisyt
-//     con.query(sql, [token], (err, result) => {
-//         if (err) {
-//             res.status(500).send('Klaida bandant prisijungti');
-//             return;
-//         }
-//         if (result.length === 0) {
-//             req.user = {
-//                 role: 'guest',
-//                 name: 'Guest',
-//                 id: 0
-//             }
-//         } else {
-//             req.user = {
-//                 role: result[0].role,
-//                 name: result[0].name,
-//                 id: result[0].id
-//             }
-//         }
-//         next();
-//     });
-// });
+//auth middleware - checking everytime browser makes request to server who the user is, using the token in cookies?
+app.use((req, res, next) => {
+    const token = req.cookies['get-funded-token'] || 'no-token';
+    const sql = `
+        SELECT u.id, u.role, u.name
+        FROM sessions AS s
+        INNER JOIN users AS u
+        ON s.user_id = u.id
+        WHERE token = ?
+    `;
+    con.query(sql, [token], (err, result) => {
+        if (err) return error500(res, err);
+        if (result.length === 0) {
+            req.user = {
+                role: 'guest',
+                name: 'Guest',
+                id: 0
+            }
+        } else {
+            req.user = {
+                role: result[0].role,
+                name: result[0].name,
+                id: result[0].id
+            }
+        }
+        next();
+        console.log(req.user);
+    });
+
+    console.log(token);
+    console.log(req.user);
+
+});
 
 
 app.post('/login', (req, res) => {
-    const { name, password } = req.body;
-    const sql = 'SELECT * FROM users WHERE name = ? AND password = ?';
-    con.query(sql, [name, md5(password)], (err, result) => {
-        if (err) {
-            res.status(500).send('Klaida bandant prisijungti');
-            return;
-        }
+    const { username, password } = req.body;
+    const sql = `
+    SELECT * FROM users 
+    WHERE name = ? AND password = ?
+    `;
+    con.query(sql, [username, md5(password)], (err, result) => {
+        if (err) return error500(res, err);
         if (result.length === 0) {
-            res.status(401).send('Neteisingi prisijungimo duomenys');
+            res.status(401).send({
+                msg: { type: 'error', text: 'Invalid user name or password' }
+            });
             return;
         }
-        const token = uuid.v4();
-        const updateSql = 'UPDATE users SET session_id = ? WHERE name = ?';
-        con.query(updateSql, [token, name], (err) => {
-            if (err) {
-                res.status(500).send('Klaida bandant prisijungti');
-                return;
-            }
-            res.cookie('r2-token', token, { httpOnly: true, SameSite: 'none' });
+
+        const token = md5(v4());
+        const userId = result[0].id;
+        let time = new Date();
+        time = time.setMinutes(time.getMinutes() + (60 * 24));
+        time = new Date(time);
+
+        const insertSql = `
+            INSERT INTO sessions
+            (user_id, token, valid_until)
+            VALUES (?, ?, ?)
+        `;
+        con.query(insertSql, [userId, token, time], (err) => {
+            if (err) return error500(res, err);
+            res.cookie('sock-net-token', token, { httpOnly: true, SameSite: 'none' });
             res.status(200).json({
-                success: true,
-                message: 'Prisijungimas sėkmingas',
+                msg: { type: 'success', text: `Hello, ${result[0].name}! How are you?` },
                 user: {
                     role: result[0].role,
                     name: result[0].name,
@@ -99,58 +115,36 @@ app.post('/login', (req, res) => {
     });
 });
 
-
-//TODO paimti is middleware
-app.get('/get-user', (req, res) => {
+app.get('/auth-user', (req, res) => { //Gets user Data extracted in middleware and JSON parses it, then returns it back
     setTimeout(_ => {
-        const token = req.cookies['r2-token'] || 'no-token';
-        const sql = 'SELECT * FROM users WHERE session_id = ?';
-        con.query(sql, [token], (err, result) => {
-            if (err) {
-                res.status(500).send('Klaida bandant prisijungti');
-                return;
-            }
-            if (result.length === 0) {
-                res.status(200).json({
-                    role: 'guest',
-                    name: 'Guest',
-                    id: 0
-                });
-                return;
-            }
-            res.status(200).json({
-                role: result[0].role,
-                name: result[0].name,
-                id: result[0].id
-            });
-        });
+        res.json(req.user);
     }, 1000);
 });
 
 
-app.post('/logout', (req, res) => {
-    setTimeout(_ => {
-        const token = req.cookies['r2-token'] || 'no-token';
-        console.log('logout', token);
-        const sql = 'UPDATE users SET session_id = ? WHERE session_id = ?';
-        con.query(sql, [null, token], (err) => {
-            if (err) {
-                res.status(500).send('Klaida bandant atsijungti');
-                return;
-            }
-            res.clearCookie('r2-token');
-            res.status(200).json({
-                success: true,
-                message: 'Atsijungimas sėkmingas',
-                user: {
-                    role: 'guest',
-                    name: 'Guest',
-                    id: 0
-                }
-            });
-        });
-    }, 2000);
-});
+// app.post('/logout', (req, res) => {
+//     setTimeout(_ => {
+//         const token = req.cookies['r2-token'] || 'no-token';
+//         console.log('logout', token);
+//         const sql = 'UPDATE users SET session_id = ? WHERE session_id = ?';
+//         con.query(sql, [null, token], (err) => {
+//             if (err) {
+//                 res.status(500).send('Klaida bandant atsijungti');
+//                 return;
+//             }
+//             res.clearCookie('r2-token');
+//             res.status(200).json({
+//                 success: true,
+//                 message: 'Atsijungimas sėkmingas',
+//                 user: {
+//                     role: 'guest',
+//                     name: 'Guest',
+//                     id: 0
+//                 }
+//             });
+//         });
+//     }, 2000);
+// });
 
 
 

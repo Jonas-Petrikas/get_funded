@@ -163,7 +163,7 @@ con.query(sql, (err) => {
 });
 
 sql = `CREATE TABLE sessions (
-  id int(10) UNSIGNED NOT NULL,
+  id int(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   user_id int(10) UNSIGNED NOT NULL,
   token char(32) NOT NULL,
   valid_until date NOT NULL
