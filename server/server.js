@@ -124,29 +124,29 @@ app.get('/auth-user', (req, res) => { //Gets user Data extracted in middleware a
 });
 
 
-// app.post('/logout', (req, res) => {
-//     setTimeout(_ => {
-//         const token = req.cookies['r2-token'] || 'no-token';
-//         console.log('logout', token);
-//         const sql = 'UPDATE users SET session_id = ? WHERE session_id = ?';
-//         con.query(sql, [null, token], (err) => {
-//             if (err) {
-//                 res.status(500).send('Klaida bandant atsijungti');
-//                 return;
-//             }
-//             res.clearCookie('r2-token');
-//             res.status(200).json({
-//                 success: true,
-//                 message: 'Atsijungimas sėkmingas',
-//                 user: {
-//                     role: 'guest',
-//                     name: 'Guest',
-//                     id: 0
-//                 }
-//             });
-//         });
-//     }, 2000);
-// });
+app.post('/logout', (req, res) => {
+    setTimeout(_ => {
+        const token = req.cookies['get-funded-token'] || 'no-token';
+        console.log('logout', token);
+        const sql = 'DELETE FROM sessions WHERE token = ?';
+        con.query(sql, [token], (err) => {
+            if (err) {
+                res.status(500).send('Klaida bandant atsijungti');
+                return;
+            }
+            res.clearCookie('get-funded-token');
+            res.status(200).json({
+                success: true,
+                message: 'Atsijungimas sėkmingas',
+                user: {
+                    role: 'guest',
+                    name: 'Guest',
+                    id: 0
+                }
+            });
+        });
+    }, 2000);
+});
 
 
 
