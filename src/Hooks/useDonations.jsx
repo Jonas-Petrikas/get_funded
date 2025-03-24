@@ -10,7 +10,6 @@ export default function useDonations() {
     useEffect(_ => {
         axios.get(C.SERVER_URL + 'donations/home-show-latest')
             .then(res => {
-                console.log(res.data.db);
                 dispatchDonations({
                     type: A.LOAD_LATEST_DONATIONS_FROM_SERVER, // tipas ka daryt
                     payload: res.data.db // payloadas su kuo tai daryt

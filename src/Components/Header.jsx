@@ -14,11 +14,14 @@ export default function Header() {
     return (
         <section className="header">
             <header>
-                <NavLeft />
-                <div className="logo">
-                    <NavLink to="/" end><img src={logo} alt="getFunded logo" /> </NavLink>
+                <div className="top-nav">
+                    <NavLeft />
+                    <div className="logo">
+                        <NavLink to="/" end><img src={logo} alt="getFunded logo" /> </NavLink>
+                    </div>
+                    <NavRight />
                 </div>
-                <NavRight />
+
             </header>
         </section>
 

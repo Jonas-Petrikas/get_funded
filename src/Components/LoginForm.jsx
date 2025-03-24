@@ -10,7 +10,7 @@ const loginDefaults = { username: '', password: '' };
 export default function LoginForm() {
 
     const [loginData, setLoginData] = useState(loginDefaults);
-    const setUser = useContext(Auth);
+    const { setUser } = useContext(Auth);
     const { setLoginFormData } = useAuth(setUser);
 
     const handleChange = e => {
@@ -22,7 +22,7 @@ export default function LoginForm() {
 
     const doLogin = _ => {
         setLoginFormData(loginData);
-        setLoginData(loginDefaults);
+        // setLoginData(loginDefaults);
     }
 
 
@@ -43,5 +43,5 @@ export default function LoginForm() {
 
 
 
-    )
+    );
 }

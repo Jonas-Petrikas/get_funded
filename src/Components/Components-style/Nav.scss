@@ -1,15 +1,55 @@
-nav a {
-    margin: 0 15px;
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+}
+
+.nav-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.nav-left {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+.logo {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+}
+
+nav a,
+nav div {
     text-decoration: none;
     color: white;
     font-weight: bold;
     position: relative;
+    width: 100%;
+    cursor: pointer;
+    user-select: none;
 
 }
 
-nav a:hover {
-    transform: scaleX(2);
-}
+// nav div.user-menu-button:hover {
+//     transform: scale(1.1);
+// }
+
+
+// nav a:hover {
+//     // transform: scaleX(2);
+// }
 
 .fundraise-btn {
     border: 3px solid white;

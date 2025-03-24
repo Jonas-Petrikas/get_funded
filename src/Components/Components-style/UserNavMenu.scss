@@ -1,0 +1,62 @@
+@use '../../assets/style/var.scss' as v;
+
+.user-nav-menu-modal {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    justify-content: flex-start;
+    align-items: flex-start;
+    z-index: 3;
+    width: 250px;
+    background-color: v.$white;
+    border: 1px solid black;
+    border-radius: 7px 0px 7px 7px;
+    color: black;
+    top: 20px;
+    right: 60px;
+    padding: 10px 10px 20px 10px;
+    box-shadow: 4px 4px 20px -5px rgba(0, 0, 0, 0.37);
+}
+
+.user-nav-menu-modal-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 10px 30px 10px 30px;
+    text-align: left;
+    width: 100%;
+
+    h2 {
+        margin-bottom: 0px;
+        color: v.$yellow;
+    }
+
+    p {
+        color: v.$black;
+        font-weight: 100;
+        margin-top: 0;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+
+    a {
+        color: v.$black;
+        padding: 10px 0 10px 0;
+        border-bottom: 1px solid black;
+    }
+
+    .logout {
+        margin-top: 30px;
+
+        a {
+
+            border-bottom: none;
+        }
+    }
+
+    a:hover {
+        transform: scale(1.1);
+    }
+
+}

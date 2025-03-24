@@ -3,7 +3,7 @@ import './Components-style/Nav.scss'
 
 export default function NavLeft() {
     return (
-        <nav>
+        <nav className='nav-left'>
             <NavLink className='fundraise-btn' to="/create" end>FUNDRAISE</NavLink>
             <NavLink to="/projects" end>DONATE</NavLink>
 

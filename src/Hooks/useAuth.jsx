@@ -11,6 +11,7 @@ export default function useAuth(setUser) {
     const getUser = _ => {
         axios.get(C.SERVER_URL + 'auth-user', { withCredentials: true })
             .then(res => {
+                console.log(res.data);
                 setUser(res.data);
             })
             .catch(err => {
@@ -24,6 +25,7 @@ export default function useAuth(setUser) {
         }
         axios.post(C.SERVER_URL + 'login', loginFormData, { withCredentials: true })
             .then(res => {
+                console.log(res.data);
                 setUser(res.data.user);
                 navigate(C.GO_AFTER_LOGIN);
             })

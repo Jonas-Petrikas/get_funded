@@ -50,6 +50,8 @@ app.use((req, res, next) => {
         WHERE token = ?
     `;
     con.query(sql, [token], (err, result) => {
+
+        console.log(token)
         if (err) return error500(res, err);
         if (result.length === 0) {
             req.user = {
@@ -102,7 +104,7 @@ app.post('/login', (req, res) => {
         `;
         con.query(insertSql, [userId, token, time], (err) => {
             if (err) return error500(res, err);
-            res.cookie('sock-net-token', token, { httpOnly: true, SameSite: 'none' });
+            res.cookie('get-funded-token', token, { httpOnly: true, SameSite: 'none' });
             res.status(200).json({
                 msg: { type: 'success', text: `Hello, ${result[0].name}! How are you?` },
                 user: {

@@ -2,6 +2,7 @@ section.header {
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     background-color: #007bff;
     height: fit-content;
     box-shadow: 4px 4px 20px -5px rgba(0, 0, 0, 0.37);
@@ -11,13 +12,13 @@ section.header {
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 5px 30px;
     background-color: #007bff;
     color: white;
-    max-width: 1260px;
     width: 100%;
+    max-width: 1260px;
     z-index: 10;
     // box-shadow: 0px 4px 20px -5px rgba(0, 0, 0, 0.37);
 }

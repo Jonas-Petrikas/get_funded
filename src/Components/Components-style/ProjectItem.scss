@@ -1,6 +1,6 @@
 @use '../../assets/style/var.scss' as v;
 
-a {
+.projects-list a {
     width: 28%;
     min-width: 300px;
     transition: all 0.2s ease-in-out;
