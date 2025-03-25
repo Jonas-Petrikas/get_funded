@@ -1,13 +1,14 @@
 import '../Components-style/ProjectItem.scss';
 import ProgressBar from './ProgressBar';
 import * as C from '../../Constants/main.js';
+import { NavLink } from 'react-router';
 
 
 export default function ProjectItem({ id, title, fullAmount, collectedAmount, image }) {
     return (
 
 
-        <a href={C.PUBLIC_URL + 'project/:' + id}>
+        <NavLink to={'../project/' + id} end>
             <div className='project-item-card'>
 
                 <div className='project-card-image-holder'>
@@ -26,6 +27,6 @@ export default function ProjectItem({ id, title, fullAmount, collectedAmount, im
                 <p className='amount-raised'><span>{collectedAmount.toString().slice(-9, -6) + ' ' + collectedAmount.toString().slice(-6, -3) + ' ' + collectedAmount.toString().slice(-3)}</span> Eur <span>raised</span></p>
                 <button>Learn more</button>
             </div>
-        </a>
+        </NavLink>
     )
 };

@@ -1,0 +1,22 @@
+.project-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    .project-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 50px;
+
+        .project-info {
+            width: 70%;
+
+        }
+
+        .donations {
+            width: 30%;
+        }
+    }
+}

@@ -1,13 +1,12 @@
 import '../Components-style/DonationsLatestAllItem.scss';
-// import ProgressBar from '../Projects/ProgressBar';
-import * as C from '../../Constants/main.js';
 import ProgressBar from '../Projects/ProgressBar.jsx';
+import { NavLink } from 'react-router';
 
 export default function DonationsLatestAllItem({ projectId, amount, date, userName, projectTitle, fullAmount, collectedAmount }) {
     return (
 
 
-        <a href={C.PUBLIC_URL + 'project/:' + projectId}>
+        <NavLink to={'project/' + projectId} end>
             <div className='donation-item-card'>
                 <div className='donation-item-texts'>
                     <div> [ {date.split('T')[0]} ]</div>
@@ -16,6 +15,6 @@ export default function DonationsLatestAllItem({ projectId, amount, date, userNa
                 </div>
                 <div className='donation-progress-bar'><ProgressBar fullAmount={fullAmount} collectedAmount={collectedAmount}></ProgressBar></div>
             </div>
-        </a>
+        </NavLink>
     )
 };

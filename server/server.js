@@ -197,6 +197,27 @@ app.get('/donations/home-show-latest', (req, res) => {
         });
     });
 });
+//PROJECT
+
+app.get('/project/:pid', (req, res) => {
+    let pid = req.params.pid;
+
+    const sql = `
+    SELECT * 
+    FROM projects as p
+    WHERE p.id = ?
+    `;
+
+    con.query(sql, [pid], (err, result) => {
+        if (err) return error500(res, err);
+        res.json({
+            success: true,
+            project: result
+        });
+    });
+    console.log(pid);
+})
+
 
 
 
