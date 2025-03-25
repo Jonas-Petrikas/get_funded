@@ -20,7 +20,10 @@ export default function Project() {
         } else {
             return (
                 <div className="project-container">
-                    <img src={project[0].image}></img>
+                    <div className="project-image-container">
+                        <img src={project[0].image}></img>
+                    </div>
+
                     <div className="project-details">
                         <div className="project-info">
                             <h1>{project[0].title}</h1>
