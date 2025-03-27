@@ -198,13 +198,15 @@ app.get('/donations/home-show-latest', (req, res) => {
     });
 });
 //PROJECT
-
+let pid = 0;
 app.get('/project/:pid', (req, res) => {
-    let pid = req.params.pid;
+    pid = req.params.pid;
 
     const sql = `
-    SELECT * 
+    SELECT p.id, p.title, p.content, p.image, p.amount_goal, p.amount_collected, p.created_at, u.name as user_name
     FROM projects as p
+    INNER JOIN users as u
+    ON p.user_id = u.id
     WHERE p.id = ?
     `;
 
@@ -215,8 +217,33 @@ app.get('/project/:pid', (req, res) => {
             project: result
         });
     });
+
     console.log(pid);
-})
+});
+
+app.get('/project/:pid/donations/:donamount', (req, res) => {
+    pid = req.params.pid;
+    const donationsAmount = req.params.donamount;
+
+    const sqlDonations = `
+SELECT d.amount, d.donated_at, u.name
+FROM donations AS d
+INNER JOIN users AS u
+ON u.id = d.user_id
+WHERE d.project_id = ?
+ORDER BY d.donated_at DESC
+LIMIT ?
+    `
+
+    con.query(sqlDonations, [pid, parseInt(donationsAmount)], (err, result) => {
+        if (err) return error500(res, err);
+        console.log(result);
+        res.json({
+            success: true,
+            donations: result,
+        });
+    });
+});
 
 
 

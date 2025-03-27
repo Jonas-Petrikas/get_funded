@@ -85,12 +85,20 @@ button {
   justify-content: flex-start;
   align-items: center;
   background-color: v.$white;
-  padding: 30px 50px 100px 50px;
+  padding: 0px 50px 100px 50px;
 
   &.shadow {
     box-shadow: 4px 4px 20px -5px rgba(0, 0, 0, 0.37);
 
   }
+}
+
+h1 {
+  margin-top: 30px;
+}
+
+h2 {
+  margin-top: 30px;
 }
 
 

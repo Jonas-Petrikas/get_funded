@@ -6,7 +6,7 @@ import projectReducer from '../Reducers/projectReducer';
 
 export default function useProject({ projectID }) {
     const [project, dispatchProject] = useReducer(projectReducer, null);
-
+    console.log(projectID);
 
 
 
