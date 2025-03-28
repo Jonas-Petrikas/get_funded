@@ -1,10 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import Data from "../Contexts/Data";
 import { useParams } from "react-router";
 import ProgressBar from "../Components/Projects/ProgressBar";
 import ProjectDonations from "../Components/Donations/ProjectDonations";
 
 export default function Project() {
+    const [donateModal, setDonateModal] = useState(false);
 
     let { pid } = useParams();
     console.log(pid);
@@ -16,7 +17,8 @@ export default function Project() {
 
     useEffect(_ => {
         setProjectID(pid);
-        setDonationsAmount(donationsCount)
+        setDonationsAmount(donationsCount);
+        setDonateModal(false);
 
         console.log(pid);
 
@@ -33,6 +35,12 @@ export default function Project() {
             e.target.innerText = 'Show all';
         }
 
+
+    }
+
+    const showDonateModal = _ => {
+        setDonateModal(!donateModal)
+        console.log(donateModal)
 
     }
 
@@ -59,7 +67,11 @@ export default function Project() {
                         <div className="donations">
                             <h2>Donations: </h2>
                             <ProgressBar fullAmount={fullAmount} collectedAmount={collectedAmount} />
-                            <button>Donate</button>
+                            <button onClick={showDonateModal}>Donate</button>
+                            {
+                                donateModal &&
+                                <div> Donate modal space</div>
+                            }
                             <h2>Recent Donators: </h2>
 
                             <div className="recent-donators-container">
