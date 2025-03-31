@@ -226,7 +226,7 @@ app.get('/project/:pid/donations/:donamount', (req, res) => {
     const donationsAmount = req.params.donamount;
 
     const sqlDonations = `
-SELECT d.amount, d.donated_at, u.name
+SELECT d.id, d.amount, d.donated_at, u.name
 FROM donations AS d
 INNER JOIN users AS u
 ON u.id = d.user_id
