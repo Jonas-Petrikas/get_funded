@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useState } from 'react';
 import * as C from '../Constants/main';
 import * as A from '../Constants/actions';
 import axios from 'axios';
@@ -6,7 +6,6 @@ import projectReducer from '../Reducers/projectReducer';
 
 export default function useProject({ projectID }) {
     const [project, dispatchProject] = useReducer(projectReducer, null);
-    console.log(projectID);
 
 
 

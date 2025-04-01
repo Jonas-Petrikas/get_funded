@@ -23,12 +23,6 @@ export default function ProjectsList() {
         <section className="projects-list">
             {
                 projects.map(p => <ProjectItem key={p.id} id={p.id} title={p.title} fullAmount={p.amount_goal} collectedAmount={p.amount_collected} image={p.image} />)
-                // 
-
-
-
-
-
             }
 
 

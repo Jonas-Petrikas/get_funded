@@ -6,48 +6,39 @@ import ProjectDonations from "../Components/Donations/ProjectDonations";
 import DonateModal from "../Components/DonateModal";
 
 export default function Project() {
-    const [donateModal, setDonateModal] = useState(false);
-
     let { pid } = useParams();
-    console.log(pid);
+
     const { project, setProjectID, projectDonations, setDonationsAmount } = useContext(Data);
-    console.log(projectDonations)
-
-    let donationsCount = 3;
-
+    const [donateModal, setDonateModal] = useState(false);
+    const showDonateModal = () => setDonateModal(!donateModal);
 
     useEffect(_ => {
         setProjectID(pid);
-        setDonationsAmount(donationsCount);
-        setDonateModal(false);
+        setDonationsAmount(3);
+        // setDonateModal(false);
+        console.log('užsikrove')
 
-        console.log(pid);
 
-    }, [pid])
+    }, [pid, setProjectID, setDonationsAmount]);
+
+
 
     const showAllDonations = e => {
         if (e.target.innerText === 'Show all') {
-            donationsCount = 9999;
-            setDonationsAmount(donationsCount);
+            setDonationsAmount(99999);
             e.target.innerText = 'Show less';
         } else {
-            donationsCount = 3;
-            setDonationsAmount(donationsCount);
+            setDonationsAmount(3);
             e.target.innerText = 'Show all';
         }
 
 
     }
 
-    console.log(projectDonations);
 
-    const showDonateModal = _ => {
-        setDonateModal(!donateModal)
-        console.log(donateModal)
-
-    }
 
     const projectLoader = _ => {
+
         if (project === null || project.length === 0) {
             return <h1>Post is loading</h1>
         } else {
@@ -96,7 +87,7 @@ export default function Project() {
 
                     </div>{
                         donateModal &&
-                        <DonateModal showDonateModal={showDonateModal} />
+                        <DonateModal showDonateModal={showDonateModal} pid={pid} />
                     }
 
                 </>

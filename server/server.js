@@ -51,7 +51,6 @@ app.use((req, res, next) => {
     `;
     con.query(sql, [token], (err, result) => {
 
-        console.log(token)
         if (err) return error500(res, err);
         if (result.length === 0) {
             req.user = {
@@ -67,12 +66,7 @@ app.use((req, res, next) => {
             }
         }
         next();
-        console.log(req.user);
     });
-
-    console.log(token);
-    console.log(req.user);
-
 });
 
 
@@ -217,8 +211,6 @@ app.get('/project/:pid', (req, res) => {
             project: result
         });
     });
-
-    console.log(pid);
 });
 
 app.get('/project/:pid/donations/:donamount', (req, res) => {
@@ -237,7 +229,7 @@ LIMIT ?
 
     con.query(sqlDonations, [pid, parseInt(donationsAmount)], (err, result) => {
         if (err) return error500(res, err);
-        console.log(result);
+
         res.json({
             success: true,
             donations: result,

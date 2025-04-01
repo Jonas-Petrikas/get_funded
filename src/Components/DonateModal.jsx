@@ -1,22 +1,40 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Auth from "../Contexts/Auth";
+import { Link } from "react-router";
+import useMakeDonations from "../Hooks/useMakeDonation";
 
 
-export default function DonateModal({ showDonateModal }) {
+export default function DonateModal({ showDonateModal, pid }) {
     const { user } = useContext(Auth);
 
-    const [userName, setUserName] = useState(user.name);
-    const [donationAmount, setDonationAmount] = useState(0);
+    const { setDonation } = useMakeDonations({ pid });
+    const [donorName, setDonorName] = useState(user.name);
+    const [donationAmount, setDonationAmount] = useState(1);
+
+    const [warningMessage, setWarningMessage] = useState('error message goes here');
 
 
     const handleInput = e => {
         if (e.target.name === 'userName') {
-            setUserName(e.target.value);
+            setDonorName(e.target.value);
         } else {
-            setDonationAmount(e.target.value);
+            if (e.target.value <= 0) {
+                setWarningMessage('Amount should be higher than 0!')
+            } else {
+                setDonationAmount(e.target.value);
+            }
+
+
         }
+    }
 
+    const makeDonation = _ => {
+        console.log('donation from', donorName, 'with the amount: ', donationAmount)
+        setDonation({
+            amount: donationAmount,
+            donor: donorName
 
+        })
 
     }
 
@@ -31,24 +49,28 @@ export default function DonateModal({ showDonateModal }) {
             <div className="donate-modal-card">
                 <div className="donate-modal-card-close" onClick={showDonateModal}>X</div>
                 <div className="donate-modal-card-title">
-                    <h2>Donate to the project</h2>
+                    <h2>Donate to the project #{pid}</h2>
                 </div>
                 <div className="donate-modal-card-description">
-                    <p>Write amount and the name of the donor to donate</p>
-
+                    <p>Write amount and name of the donor to donate below</p>
                 </div>
+
+                {
+                    warningMessage ? <div className="donate-modal-card-warning-message"> {warningMessage}</div> : ''
+                }
+
                 <div className="donate-modal-card-inputs">
                     <div className="donate-modal-card-inputs-amount">
-                        <p>AMOUNT:</p>
+                        <p>AMOUNT (Eur):</p>
                         <input type="number" name='donationAmount' onChange={handleInput} value={donationAmount} />
                     </div>
                     <div className="donate-modal-card-inputs-name">
-                        <p>DONOR:</p>
-                        <input type="text" name='userName' onChange={handleInput} value={userName} />
+                        <p>DONOR NAME:</p>
+                        <input type="text" name='userName' onChange={handleInput} value={donorName} />
                     </div>
 
                 </div>
-                <button>DONATE</button>
+                <button onClick={makeDonation}>DONATE</button>
             </div>
 
         </div>

@@ -1,3 +1,5 @@
+@use '../../assets/style/var.scss' as v;
+
 .donate-modal {
     // min-width: 100vh;
     // min-height: 100vh;
@@ -47,6 +49,16 @@
             cursor: pointer;
         }
 
+        &-warning-message {
+            background-color: rgba(255, 0, 0, 0.186);
+            color: red;
+            border: 1px solid red;
+            border-radius: 3px;
+            width: 90%;
+            text-align: center;
+            padding: 10px;
+        }
+
         &-inputs {
             display: flex;
             justify-content: center;
@@ -55,6 +67,27 @@
             text-align: center;
             text-transform: uppercase;
             font-weight: 700;
+            margin-top: 10px;
+
+            p {
+                margin: 10px;
+                font-size: 20px;
+            }
+
+            input {
+                padding: 5px 20px;
+                font-size: 18px;
+            }
+        }
+
+        button {
+            margin-top: 15px;
+            background-color: v.$yellow;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            font-size: 24px;
+            font-weight: 500;
         }
     }
 }
