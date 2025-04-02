@@ -1,15 +1,13 @@
 import '../Components-style/ProjectItem.scss';
 import ProgressBar from './ProgressBar';
-import * as C from '../../Constants/main.js';
 import { NavLink } from 'react-router';
-import useProject from '../../Hooks/useProject.jsx';
 import DonateModal from '../DonateModal.jsx';
 import { useState } from 'react';
 
 
 export default function ProjectItem({ id, title, fullAmount, collectedAmount, image }) {
     const [donateModal, setDonateModal] = useState(false);
-    const showDonateModal = () => setDonateModal(!donateModal);
+    const showDonateModal = _ => setDonateModal(!donateModal);
     return (
         <>
 

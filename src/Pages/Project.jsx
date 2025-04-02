@@ -72,7 +72,7 @@ export default function Project() {
                                             <div className='project-donations-show-all' onClick={showAllDonations}>Show all</div>
                                             {
                                                 projectDonations.map(pd => (
-                                                    <ProjectDonations key={pd.id} userName={pd.name} amount={pd.amount} date={pd.donated_at} />
+                                                    <ProjectDonations key={pd.id} userName={pd.name} customName={pd.custom_name} amount={pd.amount} date={pd.donated_at} />
 
                                                 )
 

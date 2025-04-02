@@ -2,12 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import Auth from "../Contexts/Auth";
 import { Link } from "react-router";
 import useMakeDonations from "../Hooks/useMakeDonation";
+import Data from "../Contexts/Data";
 
 
 export default function DonateModal({ showDonateModal, pid }) {
     const { user } = useContext(Auth);
 
-    const { setDonation } = useMakeDonations({ pid });
+    const { setDonation } = useContext(Data);
     const [donorName, setDonorName] = useState(user.name);
     const [donationAmount, setDonationAmount] = useState(1);
 
@@ -33,8 +34,9 @@ export default function DonateModal({ showDonateModal, pid }) {
         setDonation({
             amount: donationAmount,
             donor: donorName
+        });
+        showDonateModal();
 
-        })
 
     }
 

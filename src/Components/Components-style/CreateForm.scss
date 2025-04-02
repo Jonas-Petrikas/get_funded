@@ -4,9 +4,57 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
     padding: 20px;
     width: 60%;
+
+    .project-image {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        align-items: center;
+
+        label {
+            padding: 10px 30px;
+            border-radius: 7px;
+            border: 2px solid black;
+            font-size: 16px;
+            height: 100%;
+            transition: all 0.1s ease-in-out;
+            text-align: center;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+
+
+
+        }
+
+        .image-holder {
+            width: 305px;
+            height: 100px;
+            background-color: v.$grey-bg;
+            border: 2px solid v.$grey-text;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+
+        }
+
+    }
+
+
+
+
 
     input {
         padding: 10px 30px;
@@ -17,18 +65,8 @@
         transition: all 0.1s ease-in-out;
         text-align: center;
 
-        &[type=file]::file-selector-text {
-            color: blue;
-
-        }
-
-        &::file-selector-button {
-            font-size: 16px;
-            padding: 5px 5px;
-            background-color: transparent;
-            border-radius: 7px;
-
-            transition: all 0.2s ease-in-out;
+        &[type=file] {
+            display: none;
         }
 
         &:focus {
@@ -37,6 +75,11 @@
             outline: 7px ridge v.$yellow;
         }
 
+    }
+
+    .title {
+        font-size: 30px;
+        font-weight: 700;
     }
 
 
@@ -64,8 +107,11 @@
         margin-top: 15px;
         font-size: 18px;
         padding: 10px 30px;
-        width: 100%;
+        width: 50%;
         transition: all 0.2s ease-in-out;
+        background-color: v.$yellow;
+        font-weight: 500;
+        font-size: 20px;
     }
 
     button:hover {

@@ -150,7 +150,8 @@ CREATE TABLE donations (
   project_id int(10) UNSIGNED NOT NULL,
   amount mediumint(7) UNSIGNED NOT NULL,
   donated_at date NOT NULL DEFAULT current_timestamp(),
-  user_id int(10) UNSIGNED DEFAULT NULL
+  user_id int(10) UNSIGNED DEFAULT NULL,
+  custom_name char(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 `
 

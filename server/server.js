@@ -56,7 +56,7 @@ app.use((req, res, next) => {
             req.user = {
                 role: 'guest',
                 name: 'Guest',
-                id: 0
+                id: 101
             }
         } else {
             req.user = {
@@ -163,10 +163,14 @@ app.get('/projects/confirmed-list', (req, res) => {
     });
 });
 
+app.post('/project/new', (req, res) => {
+    console.log('finish me!!! PLZ')
+})
+
 //DONATIONS
 app.get('/donations/home-show-latest', (req, res) => {
     const sql = `
-    SELECT d.id, d.amount, d.donated_at, d.project_id, u.name, p.title, p.amount_goal, p.amount_collected
+    SELECT d.id, d.amount, d.donated_at, d.custom_name, d.project_id, u.name, p.title, p.amount_goal, p.amount_collected
     FROM donations AS d
     INNER JOIN users AS u
     ON u.id = d.user_id
@@ -174,14 +178,7 @@ app.get('/donations/home-show-latest', (req, res) => {
     ON p.id = d.project_id
     ORDER BY d.donated_at DESC
     LIMIT ?
-
-  
-
 `;
-    // 
-
-
-
 
     con.query(sql, [10], (err, result) => {
         if (err) return error500(res, err);
@@ -191,6 +188,30 @@ app.get('/donations/home-show-latest', (req, res) => {
         });
     });
 });
+
+//MAKE DONATION
+app.post('/make-donation/:pid', (req, res) => {
+    const pid = req.params.pid;
+    const { amount, donor } = req.body;
+    const donated_at = new Date();
+    console.log('pid', pid, 'amount: ', amount, 'donor:', donor);
+    const sql = `
+    INSERT INTO donations
+    (project_id, amount, donated_at, user_id, custom_name)
+    VALUES (?, ?, ?, ?, ?)
+    `
+
+    con.query(sql, [pid, amount, donated_at, req.user.id, donor], (err) => {
+        if (err) return error500(res, err);
+        res.status(200).json({
+            success: true,
+            message: 'Successfully donated',
+        })
+    })
+
+})
+
+
 //PROJECT
 let pid = 0;
 app.get('/project/:pid', (req, res) => {
@@ -218,14 +239,14 @@ app.get('/project/:pid/donations/:donamount', (req, res) => {
     const donationsAmount = req.params.donamount;
 
     const sqlDonations = `
-SELECT d.id, d.amount, d.donated_at, u.name
-FROM donations AS d
-INNER JOIN users AS u
-ON u.id = d.user_id
-WHERE d.project_id = ?
-ORDER BY d.donated_at DESC
-LIMIT ?
-    `
+    SELECT d.id, d.amount, d.donated_at, d.custom_name, u.name
+    FROM donations AS d
+    INNER JOIN users AS u
+    ON u.id = d.user_id
+    WHERE d.project_id = ?
+    ORDER BY d.donated_at DESC
+    LIMIT ?
+        `
 
     con.query(sqlDonations, [pid, parseInt(donationsAmount)], (err, result) => {
         if (err) return error500(res, err);

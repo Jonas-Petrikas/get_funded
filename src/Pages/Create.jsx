@@ -1,6 +1,8 @@
 import CreateForm from "../Components/CreateForm";
 
+
 export default function Create() {
+
     return (
         <>
             <div className="bin">

@@ -6,7 +6,7 @@ import projectReducer from '../Reducers/projectReducer';
 
 export default function useProject({ projectID }) {
     const [project, dispatchProject] = useReducer(projectReducer, null);
-
+    const [storeProject, setStoreProject] = useState(null);
 
 
     useEffect(_ => {
@@ -22,5 +22,22 @@ export default function useProject({ projectID }) {
             });
     }, [projectID])
 
-    return { project, dispatchProject }
+
+    useEffect(_ => {
+
+        if (null === storeProject) {
+            return;
+        }
+
+        axios.post(C.SERVER_URL + 'project/new', storeProject, { withCredentials: true })
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    });
+
+    return { project, dispatchProject, setStoreProject }
 }
