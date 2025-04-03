@@ -24,7 +24,7 @@ export default function DonationsLatestAllList() {
     return (
         <section className="donations-list">
             {
-                donations.map(d => <LatestAllItem key={d.id} projectId={d.project_id} amount={d.amount} date={d.donated_at} userName={d.name} projectTitle={d.title} collectedAmount={d.amount_collected} fullAmount={d.amount_goal} />)
+                donations.map(d => <LatestAllItem key={d.id} projectId={d.project_id} amount={d.amount} date={d.donated_at} userName={d.name} customName={d.custom_name} projectTitle={d.title} collectedAmount={d.amount_collected} fullAmount={d.amount_goal} />)
                 // 
 
 

@@ -14,6 +14,7 @@ import Create from './Pages/Create';
 import Login from './Pages/Login';
 import Logout from './Pages/Logout';
 import Project from './Pages/Project';
+import Admin from './Pages/Admin';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/create" element={<Create />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/admin/main" element={<Admin />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<Page404 />} />
         </Routes>

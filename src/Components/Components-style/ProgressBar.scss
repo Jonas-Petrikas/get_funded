@@ -75,3 +75,22 @@
     }
 
 }
+
+.project.donation-progress-bar {
+    width: 150px;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    .progress-bar-percent {
+        display: none;
+    }
+
+    .progress-bar-progress-amount {
+        span.numbers {
+            display: none;
+        }
+    }
+}

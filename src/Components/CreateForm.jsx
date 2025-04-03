@@ -1,8 +1,10 @@
 // import { NavLink } from 'react-router';
 
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import useImage from "../Hooks/useImage";
 import Data from "../Contexts/Data";
+import Auth from "../Contexts/Auth";
+import { useNavigate } from "react-router";
 
 export default function CreateForm() {
     const [title, setTitle] = useState('');
@@ -10,8 +12,9 @@ export default function CreateForm() {
     const [amountGoal, setAmountGoal] = useState('');
     const { image, readFile } = useImage();
     const { setStoreProject } = useContext(Data);
+    const { user } = useContext(Auth);
 
-
+    const navigate = useNavigate();
 
 
     const handleInput = e => {
@@ -33,7 +36,16 @@ export default function CreateForm() {
         });
     }
 
+    useEffect(_ => {
+        if (!user || user.role === 'guest') {
+            navigate("/login");
+        }
+
+
+    }, [])
+
     return (
+
         <>
             <div className='create-form'>
 

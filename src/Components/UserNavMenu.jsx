@@ -12,6 +12,9 @@ export default function UserNavMenu({ style }) {
             <div className="user-nav-menu-modal-items">
                 <h2>Hi, <i>{user.name}!</i></h2>
                 <p>[{user.role}]</p>
+                {
+                    user.role === 'admin' ? <NavLink to='/admin/main' end><span className="admin-btn">ADMIN DASH 🚀</span></NavLink> : ''
+                }
                 <NavLink to='/create' end>New fundraiser</NavLink>
                 <NavLink to='/' end>My projects</NavLink>
                 <NavLink to='/' end>Donations</NavLink>

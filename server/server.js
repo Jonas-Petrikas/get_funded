@@ -4,11 +4,17 @@ import cors from 'cors';
 import md5 from 'md5';
 import cookieParser from 'cookie-parser';
 import { v4 } from 'uuid';
+import fs from 'fs';
 
 const app = express();
 const port = 3333;
 const frontURL = 'http://localhost:5173';
 const serverUrl = `http://localhost:${port}/`;
+
+app.use(express.json({ limit: '50mb' }));
+app.use(express.static('public'));
+
+
 
 app.use(cookieParser());
 
@@ -37,7 +43,47 @@ con.connect(err => {
     console.log('Prisijungimas prie DB buvo sėkmingas');
 });
 
+
+const error400 = (res, customCode = 0) => res.status(400).json({
+    msg: { type: 'error', text: 'Invalid request. Code: ' + customCode }
+});
+const error401 = (res, message) => res.status(401).json({
+    msg: { type: 'error', text: message }
+});
 const error500 = (res, err) => res.status(500).json(err);
+
+//Helper
+const saveImageAsFile = imageBase64String => {
+
+    if (!imageBase64String) {
+        return null;
+    }
+
+    let type, image;
+
+    if (imageBase64String.indexOf('data:image/png;base64,') === 0) {
+        type = 'png';
+        image = Buffer.from(imageBase64String.replace(/^data:image\/png;base64,/, ''), 'base64');
+    } else if (imageBase64String.indexOf('data:image/jpeg;base64,') === 0) {
+        type = 'jpg';
+        image = Buffer.from(imageBase64String.replace(/^data:image\/jpeg;base64,/, ''), 'base64');
+    } else {
+        error400(res, 'Bad image format 1255');
+        return;
+    }
+
+    const fileName = md5(v4()) + '.' + type;
+
+    fs.writeFileSync('public/uploads/' + fileName, image);
+
+    return fileName;
+
+}
+
+
+
+
+
 
 //auth middleware - checking everytime browser makes request to server who the user is, using the token in cookies?
 app.use((req, res, next) => {
@@ -56,7 +102,7 @@ app.use((req, res, next) => {
             req.user = {
                 role: 'guest',
                 name: 'Guest',
-                id: 101
+                id: 0
             }
         } else {
             req.user = {
@@ -163,16 +209,25 @@ app.get('/projects/confirmed-list', (req, res) => {
     });
 });
 
-app.post('/project/new', (req, res) => {
-    console.log('finish me!!! PLZ')
-})
+app.get('/projects/all', (req, res) => {
+    const sql = 'SELECT * FROM projects';
+
+    con.query(sql, (err, result) => {
+        if (err) return error500(res, err);
+        res.json({
+            success: true,
+            db: result
+        });
+    });
+});
+
 
 //DONATIONS
 app.get('/donations/home-show-latest', (req, res) => {
     const sql = `
     SELECT d.id, d.amount, d.donated_at, d.custom_name, d.project_id, u.name, p.title, p.amount_goal, p.amount_collected
     FROM donations AS d
-    INNER JOIN users AS u
+    LEFT JOIN users AS u
     ON u.id = d.user_id
     INNER JOIN projects AS p
     ON p.id = d.project_id
@@ -241,7 +296,7 @@ app.get('/project/:pid/donations/:donamount', (req, res) => {
     const sqlDonations = `
     SELECT d.id, d.amount, d.donated_at, d.custom_name, u.name
     FROM donations AS d
-    INNER JOIN users AS u
+    LEFT JOIN users AS u
     ON u.id = d.user_id
     WHERE d.project_id = ?
     ORDER BY d.donated_at DESC
@@ -257,6 +312,41 @@ app.get('/project/:pid/donations/:donamount', (req, res) => {
         });
     });
 });
+
+app.post('/project/new', (req, res) => {
+    if (!req.user.role || req.user.role === 'guest') {
+        error401(res, 'Please login first.');
+        return;
+    }
+    const newProject = req.body;
+
+
+
+    const title = newProject.title;
+    const content = newProject.content;
+    const user_id = req.user.id;
+    const image = frontURL + '/uploads/' + saveImageAsFile(req.body.image.src);
+    const amount_goal = newProject.amountGoal;
+    const amount_collected = 0;
+    const created_at = new Date();
+    const updated_at = new Date();
+    const status = req.user.role === 'user' ? 'to_review' : 'approved';
+
+
+    const sql = `
+    INSERT INTO projects
+    (title, content, user_id, image, amount_goal, amount_collected, created_at, updated_at, status)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `
+
+    con.query(sql, [title, content, user_id, image, amount_goal, amount_collected, created_at, updated_at, status], (err) => {
+        if (err) return error500(res, err);
+        res.status(200).json({
+            success: true,
+            message: 'Project successfully created',
+        })
+    })
+})
 
 
 

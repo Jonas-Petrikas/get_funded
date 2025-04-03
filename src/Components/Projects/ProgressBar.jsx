@@ -7,7 +7,7 @@ export default function ProgressBar({ fullAmount, collectedAmount }) {
             <div className="progress-bar">
                 <div className='progress-bar-progress-amount'>
                     <span>Funding progress: </span>
-                    <span>
+                    <span className='numbers'>
                         <span>{collectedAmount.toString().slice(-9, -6) + ' ' + collectedAmount.toString().slice(-6, -3) + ' ' + collectedAmount.toString().slice(-3)} Eur </span>
                         /
                         <span> {fullAmount.toString().slice(-9, -6) + ' ' + fullAmount.toString().slice(-6, -3) + ' ' + fullAmount.toString().slice(-3)} Eur</span>

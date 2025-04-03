@@ -12,15 +12,18 @@ export default function DonateModal({ showDonateModal, pid }) {
     const [donorName, setDonorName] = useState(user.name);
     const [donationAmount, setDonationAmount] = useState(1);
 
-    const [warningMessage, setWarningMessage] = useState('error message goes here');
+    const [warningMessage, setWarningMessage] = useState('');
 
 
     const handleInput = e => {
         if (e.target.name === 'userName') {
             setDonorName(e.target.value);
         } else {
-            if (e.target.value <= 0) {
-                setWarningMessage('Amount should be higher than 0!')
+            if (e.target.value < 1) {
+                setWarningMessage('Amount should be higher than 1!')
+                setTimeout(_ => {
+                    setWarningMessage('')
+                }, 2000)
             } else {
                 setDonationAmount(e.target.value);
             }

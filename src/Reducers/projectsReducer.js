@@ -7,6 +7,9 @@ export default function projectsReducer(state, action) {
         case A.LOAD_CONFIRMED_PROJECTS_FROM_SERVER:
             newState = action.payload;
             break;
+        case A.LOAD_ALL_PROJECTS_FROM_SERVER:
+            newState = action.payload;
+            break;
 
         default: newState = state;
     }

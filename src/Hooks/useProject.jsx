@@ -37,7 +37,7 @@ export default function useProject({ projectID }) {
                 console.log(error)
             })
 
-    });
+    }, [storeProject]);
 
     return { project, dispatchProject, setStoreProject }
 }
