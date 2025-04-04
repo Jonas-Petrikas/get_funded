@@ -1,19 +1,20 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import Auth from "../Contexts/Auth";
 import useAllProjects from '../Hooks/useAllProjects';
+import useAdminChange from "../Hooks/useAdminChange";
 
 
 export default function Admin() {
 
     const { user } = useContext(Auth);
     const navigate = useNavigate();
-    const { allProjects, setAllprojects } = useAllProjects()
-    const [showFullContent, setShowFullContent] = useState(false);
-    const [content, setContent] = useState();
+    const { allProjects, setAllprojects } = useAllProjects();
+    const { updatedProjects, setUpdatedProjects } = useAdminChange();
+    const deletions = useRef([]);
+    const changed = useRef([]);
 
 
-    console.log(allProjects);
 
     useEffect(_ => {
         if (!user || user.role !== 'admin') {
@@ -22,18 +23,48 @@ export default function Admin() {
     }, [])
 
     const deleteProject = pid => {
-        console.log('delete', pid);
-        const naujas = allProjects.db.filter(project => project.id !== pid);
-        console.log(naujas);
-        setAllprojects(ap => ({ ...ap, db: naujas }));
-        console.log(allProjects);
+        const newProjects = allProjects.db.filter(project => project.id !== pid);
+        setAllprojects(ap => ({ ...ap, db: newProjects }));
+        deletions.current.push(pid)
     }
 
     const approve = pid => {
-        console.log('approve', pid);
+
+        const updProjects = allProjects.db.map(project =>
+            project.id === pid ? { ...project, status: 'approved' } : project
+        );
+
+        setAllprojects(ap => ({
+            ...ap,
+            db: updProjects
+        }));
+
+        changed.current.push(pid);
+        console.log(changed)
+
     }
     const disapprove = pid => {
-        console.log('disapprove', pid);
+        const updProjects = allProjects.db.map(project =>
+            project.id === pid ? { ...project, status: 'disapproved' } : project
+        );
+
+        setAllprojects(ap => ({
+            ...ap,
+            db: updProjects
+        }));
+        changed.current.push(pid);
+    }
+
+    const submit = _ => {
+        console.log('submitting', allProjects);
+        console.log('deletions', deletions, 'changes', changed);
+        const newProjects = { projects: allProjects.db, delete: deletions.current, changes: changed.current }
+
+        setUpdatedProjects(newProjects);
+        deletions.current = [];
+        changed.current = [];
+
+
     }
 
     return (
@@ -64,7 +95,7 @@ export default function Admin() {
                     )
                 }
             </div>
-            <div className="save-changes-btn"><button>☝️ Save changes</button>
+            <div className="save-changes-btn"><button onClick={submit}>☝️ Save changes</button>
             </div>
 
         </div>

@@ -33,8 +33,11 @@ export default function LoginForm() {
 
                 <input name="username" onChange={handleChange} type="text" placeholder='Username' value={loginData.username} />
                 <input name="password" onChange={handleChange} type="password" placeholder='Password' value={loginData.password} />
+
                 <button onClick={doLogin}>Login</button>
+                <div>Dont have an account?  <NavLink to='/register' end><strong>REGISTER</strong></NavLink> </div>
                 <NavLink to='/' end>Back to home</NavLink>
+
 
 
             </div>

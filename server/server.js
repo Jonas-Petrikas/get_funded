@@ -348,6 +348,132 @@ app.post('/project/new', (req, res) => {
     })
 })
 
+//BACK-office
+app.post('/admin/useAdminChange', (req, res) => {
+    if (!req.user.role || req.user.role !== 'admin') {
+        error401(res, 'Please login as ADMIN first.');
+        return;
+    }
+
+    const projects = req.body;
+
+    //check if there's anything to do
+
+    if (!projects || (projects.changes.length === 0 && projects.delete.length === 0)) {
+        return res.status(400).json({
+            success: false,
+            message: 'No project data provided'
+        });
+    }
+    //check if there's anything to delete
+
+    if (projects.delete && projects.delete.length > 0) {
+        const sql1 = `
+        DELETE FROM projects
+        WHERE id IN (?)
+        `
+        con.query(sql1, [projects.delete], (err) => {
+            if (err) return error500(res, err);
+            console.log('Deleted projects:', projects.delete);
+
+            //check if there's anything to change after deletion
+
+            if (projects.changes && projects.changes.length > 0) {
+                const updatePromises = projects.projects.map(project => {
+                    return new Promise((resolve, reject) => {
+                        const sql2 = `
+                    UPDATE projects
+                    SET status = ?
+                    WHERE id = ?
+                `;
+
+                        con.query(sql2, [project.status, project.id], (err, result) => {
+                            console.log('Deleted projects:', projects.change);
+                            if (err) reject(err);
+                            else resolve(result);
+
+                        });
+                    });
+                });
+
+                // Wait for all updates to complete
+                Promise.all(updatePromises)
+                    .then(() => {
+                        res.status(200).json({
+                            success: true,
+                            message: 'Projects successfully changed'
+                        });
+                    })
+                    .catch(err => error500(res, err));
+            } else {
+                // No changes to make
+                return res.status(200).json({
+                    success: true,
+                    message: 'No changes required'
+                });
+            }
+        });
+
+    } else {
+        //if there's nothing to delete check if there's anything to change
+        if (projects.changes && projects.changes.length > 0) {
+            const updatePromises = projects.projects.map(project => {
+                return new Promise((resolve, reject) => {
+                    const sql2 = `
+                UPDATE projects
+                SET status = ?
+                WHERE id = ?
+            `;
+
+                    con.query(sql2, [project.status, project.id], (err, result) => {
+                        console.log('projects to Change:', projects.changes, project);
+                        if (err) reject(err);
+                        else resolve(result);
+                    });
+                });
+            });
+
+            // Wait for all updates to complete
+            Promise.all(updatePromises)
+                .then(() => {
+                    res.status(200).json({
+                        success: true,
+                        message: 'Projects successfully changed'
+                    });
+                })
+                .catch(err => error500(res, err));
+        } else {
+            // No changes to make
+            return res.status(200).json({
+                success: true,
+                message: 'No changes required'
+            });
+
+        }
+    }
+});
+
+
+
+
+//Login
+app.post('/register', (req, res) => {
+    const regData = req.body;
+
+    const sql = `
+    INSERT INTO users
+    (name, password, email, role)
+    VALUES (?,?,?,?)
+    `
+    con.query(sql, [regData.name, md5(regData.password), regData.email, regData.role], (err) => {
+        if (err) return error500(res, err);
+
+        console.log(regData);
+    });
+});
+
+
+
 
 
 
