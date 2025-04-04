@@ -1,0 +1,76 @@
+div.admin {
+    position: relative;
+
+
+    &-projects-list {
+        margin-top: 40px;
+        margin-bottom: 90px;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 30px;
+
+        &-project {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+
+            &-image {
+                width: 100%;
+
+                img {
+                    width: 100%;
+                    height: 150px;
+                    object-fit: cover;
+
+                }
+            }
+
+            &-status {
+
+                button.disapprove {
+                    margin-left: 10px;
+                    background-color: rgba(255, 0, 0, 0.101);
+                    color: rgb(114, 0, 0);
+                    border: 2px solid rgb(114, 0, 0);
+                }
+
+                button.approve {
+                    margin-left: 10px;
+                    background-color: rgba(4, 255, 0, 0.109);
+                    color: rgb(25, 114, 0);
+                    border: 2px solid rgb(25, 114, 0);
+                }
+            }
+        }
+
+
+    }
+
+    div.save-changes-btn {
+        button {
+            position: fixed;
+            z-index: 5;
+            bottom: 30px;
+            width: 20%;
+            height: 50px;
+            right: 30px;
+            background-color: rgb(185, 245, 185);
+            color: green;
+            font-size: 30px;
+            border: 3px solid forestgreen;
+
+            &:hover {
+                background-color: rgb(127, 203, 127);
+                color: rgb(2, 89, 2);
+
+            }
+        }
+
+    }
+
+
+}
