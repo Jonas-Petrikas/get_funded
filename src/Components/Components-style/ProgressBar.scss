@@ -12,11 +12,39 @@
         width: 100%;
         padding: 20px 20px 5px 20px;
 
+        &-progress-amount {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+            align-items: center;
+            margin-bottom: 5px;
+
+            div.funding-progress {
+                color: v.$grey-text;
+                font-size: 18px;
+                font-weight: 600;
+                letter-spacing: 1.2;
+                display: none;
+
+                // text-align: right;
+
+            }
+
+            span {
+                // color: v.$grey-text;
+                text-align: center;
+                font-size: 12px;
+            }
+
+        }
+
         .progress-bar-percent {
             text-align: center;
             display: flex;
             justify-content: center;
             width: 100%;
+            margin-top: 5px;
+            font-size: 12px;
         }
 
 
@@ -84,9 +112,9 @@
     justify-content: flex-end;
     align-items: center;
 
-    .progress-bar-percent {
-        display: none;
-    }
+    // .progress-bar-percent {
+    //     // display: none;
+    // }
 
     .progress-bar-progress-amount {
         span.numbers {

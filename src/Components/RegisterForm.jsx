@@ -8,6 +8,7 @@ export default function RegisterForm() {
     const [regFormData, setRegFormData] = useState({ name: '', password: '', email: '', role: 'user' });
     const { setRegData } = useRegistration();
     const [message, setMessage] = useState('');
+    const [warningMessage, setWarningMessage] = useState('');
 
     const handleChange = e => {
         setRegFormData(form => {
@@ -18,13 +19,20 @@ export default function RegisterForm() {
 
     const doRegister = _ => {
         setRegData(regFormData);
+        if (regFormData.name === '' || regFormData.password === '' || regFormData.email === '') {
+            setWarningMessage("Don't leave empty fields!")
+            setTimeout(_ => {
+                setWarningMessage('')
+            }, 3000)
+        } else {
+            console.log('registration form submit', regFormData);
+            setRegFormData(formDefaults);
+            setMessage('Registration submitted!')
+            setTimeout(_ => {
+                setMessage('')
+            }, 3000)
 
-        console.log('registration form submit', regFormData);
-        setRegFormData(formDefaults);
-        setMessage('Registration submitted!')
-        setTimeout(_ => {
-            setMessage('')
-        }, 4000)
+        }
 
     }
 
@@ -36,6 +44,9 @@ export default function RegisterForm() {
                 <p>Please enter your info to register</p>
                 {
                     message ? <div className="donate-modal-card-warning-message"> {message}</div> : ''
+                }
+                {
+                    warningMessage ? <div className="donate-modal-card-warning-message"> {warningMessage}</div> : ''
                 }
 
 

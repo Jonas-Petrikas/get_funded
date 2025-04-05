@@ -55,7 +55,7 @@ export default function Admin() {
         changed.current.push(pid);
     }
 
-    const submit = _ => {
+    const submit = e => {
         console.log('submitting', allProjects);
         console.log('deletions', deletions, 'changes', changed);
         const newProjects = { projects: allProjects.db, delete: deletions.current, changes: changed.current }
@@ -63,6 +63,14 @@ export default function Admin() {
         setUpdatedProjects(newProjects);
         deletions.current = [];
         changed.current = [];
+        e.target.innerText = '✅changes saved';
+        e.target.style.backgroundColor = 'forestgreen';
+        e.target.style.color = 'white';
+        setTimeout(_ => {
+            e.target.innerText = '☝️ Save changes';
+            e.target.style.backgroundColor = '#b9f5b9';
+            e.target.style.color = 'green';
+        }, 2000)
 
 
     }

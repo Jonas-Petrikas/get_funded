@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Auth from "../Contexts/Auth";
-import { Link } from "react-router";
-import useMakeDonations from "../Hooks/useMakeDonation";
+// import { Link } from "react-router";
+// import useMakeDonations from "../Hooks/useMakeDonation";
 import Data from "../Contexts/Data";
 
 
@@ -33,17 +33,16 @@ export default function DonateModal({ showDonateModal, pid }) {
     }
 
     const makeDonation = _ => {
-        console.log('donation from', donorName, 'with the amount: ', donationAmount)
+        console.log('donation from', donorName, 'with the amount: ', donationAmount, 'to project', pid)
         setDonation({
             amount: donationAmount,
-            donor: donorName
+            donor: donorName,
+            project_id: pid
         });
         showDonateModal();
 
 
     }
-
-    console.log(user);
 
 
     return (

@@ -11,10 +11,13 @@ export default function CreateForm() {
     const [content, setContent] = useState('');
     const [amountGoal, setAmountGoal] = useState('');
     const { image, readFile } = useImage();
-    const { setStoreProject } = useContext(Data);
+    const { setStoreProject, storeProject, setFrontProjects } = useContext(Data);
     const { user } = useContext(Auth);
 
+
     const navigate = useNavigate();
+
+
 
 
     const handleInput = e => {
@@ -28,12 +31,15 @@ export default function CreateForm() {
     }
 
     const submit = _ => {
-        setStoreProject({
+        const newProject = {
             title,
             content,
             amountGoal,
             image
-        });
+        };
+        console.log(image)
+        setStoreProject(newProject);
+        setFrontProjects(newProject);
     }
 
     useEffect(_ => {

@@ -196,7 +196,9 @@ app.get('/projects/confirmed-list', (req, res) => {
     const sql = `
     SELECT id, title, content, image, amount_goal, amount_collected
     FROM projects
-        WHERE status = 'approved'
+    WHERE status = 'approved' OR status = 'done'
+    ORDER BY status
+
 
 `;
 
@@ -258,11 +260,19 @@ app.post('/make-donation/:pid', (req, res) => {
 
     con.query(sql, [pid, amount, donated_at, req.user.id, donor], (err) => {
         if (err) return error500(res, err);
-        res.status(200).json({
-            success: true,
-            message: 'Successfully donated',
+
+        const sql2 = `
+        UPDATE projects
+        SET amount_collected = amount_collected + ?
+        WHERE id = ?
+        `
+        con.query(sql2, [amount, pid], (err) => {
+            res.status(200).json({
+                success: true,
+                message: 'Successfully donated',
+            })
         })
-    })
+    });
 
 })
 
@@ -339,11 +349,12 @@ app.post('/project/new', (req, res) => {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `
 
-    con.query(sql, [title, content, user_id, image, amount_goal, amount_collected, created_at, updated_at, status], (err) => {
+    con.query(sql, [title, content, user_id, image, amount_goal, amount_collected, created_at, updated_at, status], (err, result) => {
         if (err) return error500(res, err);
         res.status(200).json({
             success: true,
             message: 'Project successfully created',
+            result: result
         })
     })
 })

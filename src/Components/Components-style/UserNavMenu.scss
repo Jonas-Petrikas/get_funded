@@ -1,5 +1,16 @@
 @use '../../assets/style/var.scss' as v;
 
+.modal-bg {
+    width: 100vw;
+    height: 500px;
+    background-color: transparent;
+    top: 0;
+    right: 0;
+    display: block;
+    position: fixed;
+
+}
+
 .user-nav-menu-modal {
     display: flex;
     flex-direction: column;

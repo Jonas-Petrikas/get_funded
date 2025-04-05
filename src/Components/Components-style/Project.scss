@@ -99,6 +99,12 @@
                 letter-spacing: 1.5px;
                 font-size: 18px;
             }
+
+            button.disabled {
+                background-color: v.$grey-text;
+                color: white;
+                cursor: not-allowed;
+            }
         }
     }
 }

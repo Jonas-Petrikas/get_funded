@@ -11,7 +11,7 @@ export default function DonationsLatestAllItem({ projectId, amount, date, userNa
                 <div className='donation-item-texts'>
                     <div className='donation-item-date'> {date.split('T')[0]}</div>
                     <div> <strong>{customName === null ? userName : customName}</strong> donated {amount.toString().slice(-9, -6) + ' ' + amount.toString().slice(-6, -3) + ' ' + amount.toString().slice(-3)} Eur</div>
-                    <div>towards: <strong>{projectTitle}</strong></div>
+                    <div>towards: <strong>{projectTitle.slice(0, 10)}...</strong></div>
                 </div>
                 <div className='project donation-progress-bar'><ProgressBar fullAmount={fullAmount} collectedAmount={collectedAmount}></ProgressBar></div>
             </div>

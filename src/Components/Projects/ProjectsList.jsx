@@ -1,12 +1,19 @@
 import ProjectItem from "./ProjectItem";
 import '../Components-style/ProjectsList.scss';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Data from "../../Contexts/Data";
 
 export default function ProjectsList() {
 
-    const { projects } = useContext(Data);
+    const { projects, frontProjects } = useContext(Data);
+    console.log('frontProjects', frontProjects)
+    useEffect(_ => {
+        if (frontProjects === null) {
+            return
+        }
+        console.log('frontProjects', frontProjects)
 
+    }, [frontProjects])
 
 
     if (projects === null) {
@@ -16,14 +23,20 @@ export default function ProjectsList() {
             </div>
         );
     }
-
+    console.log(frontProjects);
 
 
     return (
         <section className="projects-list">
-            {
-                projects.map(p => <ProjectItem key={p.id} id={p.id} title={p.title} fullAmount={p.amount_goal} collectedAmount={p.amount_collected} image={p.image} />)
-            }
+            <>
+                {
+                    frontProjects !== null ? <ProjectItem id={frontProjects.id} title={frontProjects.title} content={frontProjects.content} fullAmount={frontProjects.amountGoal} collectedAmount={0} image={frontProjects.image.src} /> : ''
+                }
+                {
+                    projects.map(p => <ProjectItem key={p.id} id={p.id} title={p.title} content={p.content} fullAmount={p.amount_goal} collectedAmount={p.amount_collected} image={p.image} />)
+
+                }
+            </>
 
 
         </section>

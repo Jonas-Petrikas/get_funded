@@ -3,12 +3,17 @@ import Auth from "../Contexts/Auth";
 import { NavLink } from "react-router";
 
 
-export default function UserNavMenu({ style }) {
+export default function UserNavMenu({ style, changeModalVis, showMenuModal }) {
 
     const { user } = useContext(Auth);
 
-    return (
+    return (<>
+
+        <div className="modal-bg" onClick={changeModalVis} style={{ display: showMenuModal }}>
+        </div>
+
         <div className="user-nav-menu-modal" style={style}>
+
             <div className="user-nav-menu-modal-items">
                 <h2>Hi, <i>{user.name}!</i></h2>
                 <p>[{user.role}]</p>
@@ -22,6 +27,8 @@ export default function UserNavMenu({ style }) {
                 <div className="logout"><NavLink to='/logout' end>Logout</NavLink></div>
 
             </div>
+
         </div >
+    </>
     )
 }

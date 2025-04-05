@@ -62,7 +62,7 @@ export default function Project() {
                             <div className="donations">
                                 <h2>Donations: </h2>
                                 <ProgressBar fullAmount={fullAmount} collectedAmount={collectedAmount} />
-                                <button onClick={showDonateModal}>Donate</button>
+                                {fullAmount <= collectedAmount ? <button className='disabled' >Donate</button> : <button onClick={showDonateModal}>Donate</button>}
 
                                 <h2>Recent Donators: </h2>
                                 {

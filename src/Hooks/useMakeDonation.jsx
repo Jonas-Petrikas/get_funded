@@ -9,14 +9,16 @@ export default function useMakeDonations({ projectID }) {
     const [donation, setDonation] = useState(null);
 
 
+
     useEffect(_ => {
         if (null === donation) {
             return;
         }
+        console.log('project id', donation.project_id)
         console.log('pasileido useEffect useMakeDonation')
-        axios.post(C.SERVER_URL + 'make-donation/' + projectID, { amount: donation.amount, donor: donation.donor }, { withCredentials: true })
+        axios.post(C.SERVER_URL + 'make-donation/' + donation.project_id, { amount: donation.amount, donor: donation.donor, pid: donation.project_id }, { withCredentials: true })
             .then(res => {
-                navigate('/project/' + projectID)
+                navigate('/project/' + donation.project_id)
             })
             .catch(error => {
                 console.log(error)

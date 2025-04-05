@@ -21,7 +21,7 @@ export default function NavRight() {
             <NavLink to='/about' end>ABOUT</NavLink>
             <NavLink to='/contacts' end>CONTACTS</NavLink>
             {
-                user.role !== 'guest' || !user ? <div className='user-menu-button' onClick={changeModalVis} >User menu<UserNavMenu style={{ display: showMenuModal }} /></div> : <NavLink to='/login' end> Login</NavLink>
+                user.role !== 'guest' || !user ? <div className='user-menu-button' onClick={changeModalVis} >User menu<UserNavMenu setShowMenuModal={setShowMenuModal} showMenuModal={showMenuModal} style={{ display: showMenuModal }} /></div> : <NavLink to='/login' end> Login</NavLink>
             }
         </nav>
     )

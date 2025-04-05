@@ -19,6 +19,7 @@ export const DataProvider = ({ children }) => {
     const { project, dispatchProject, setStoreProject } = useProject({ projectID });
     const { projectDonations, dispatchProjectDonations } = useProjectDonations({ projectID, donationsAmount });
     const { donation, setDonation } = useMakeDonations({ projectID });
+    const [frontProjects, setFrontProjects] = useState(null);
 
     return (
         <Data.Provider value={{
@@ -29,7 +30,8 @@ export const DataProvider = ({ children }) => {
             projectID, setProjectID,
             projectDonations, dispatchProjectDonations,
             donationsAmount, setDonationsAmount,
-            donation, setDonation
+            donation, setDonation,
+            frontProjects, setFrontProjects
         }}>
             {children}
         </Data.Provider>

@@ -1,0 +1,12 @@
+.hp-projects {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: start;
+    justify-content: start;
+    margin-top: 30px;
+
+    &-list-holder {
+        width: 80%;
+    }
+}

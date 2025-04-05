@@ -5,7 +5,7 @@ import DonateModal from '../DonateModal.jsx';
 import { useState } from 'react';
 
 
-export default function ProjectItem({ id, title, fullAmount, collectedAmount, image }) {
+export default function ProjectItem({ id, title, fullAmount, collectedAmount, image, content }) {
     const [donateModal, setDonateModal] = useState(false);
     const showDonateModal = _ => setDonateModal(!donateModal);
     return (
@@ -13,9 +13,9 @@ export default function ProjectItem({ id, title, fullAmount, collectedAmount, im
 
 
             <div className='project-item-card'>
+                <NavLink to={'../project/' + id} end>
+                    <div className='project-card-image-holder'>
 
-                <div className='project-card-image-holder'>
-                    <NavLink to={'../project/' + id} end>
                         <img className='project-card-image' src={image} alt="" />
                         <div className="project-card-title-holder">
                             <h2 className='project-title'>
@@ -23,21 +23,32 @@ export default function ProjectItem({ id, title, fullAmount, collectedAmount, im
                             </h2>
 
                         </div>
-                    </NavLink>
-
-                </div>
 
 
-                <p><span>Goal: </span><span>{fullAmount.toString().slice(-9, -6) + ' ' + fullAmount.toString().slice(-6, -3) + ' ' + fullAmount.toString().slice(-3)}</span> Eur</p>
-                <ProgressBar fullAmount={fullAmount} collectedAmount={collectedAmount} />
-                <p className='amount-raised'><span>{collectedAmount.toString().slice(-9, -6) + ' ' + collectedAmount.toString().slice(-6, -3) + ' ' + collectedAmount.toString().slice(-3)}</span> Eur <span>raised</span></p>
+                    </div>
+                    <ProgressBar fullAmount={fullAmount} collectedAmount={collectedAmount} />
+                    <div className='project-item-card-description'>
+                        <p>{content.slice(0, 60)}...</p>
+                    </div>
+                </NavLink>
+
+
+
 
                 <div className="buttons">
-                    <NavLink to={'../project/' + id} end><button>Learn more</button></NavLink>
-                    <button className='donate-btn' onClick={showDonateModal}>Donate</button>
+                    {
+                        fullAmount <= collectedAmount ? '' :
+                            <>
+                                <NavLink to={'../project/' + id} end><button>Learn more</button></NavLink>
+                                <button className='donate-btn' onClick={showDonateModal}>Donate</button>
+                            </>
+                    }
                 </div>
 
-            </div>
+                {fullAmount === collectedAmount ? <div className="finished">Collection Finished!</div> : ''}
+
+            </div >
+
 
             {
                 donateModal &&
