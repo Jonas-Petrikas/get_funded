@@ -5,7 +5,7 @@ import Data from "../../Contexts/Data";
 
 export default function ProjectsList() {
 
-    const { projects, frontProjects } = useContext(Data);
+    const { projects, frontProjects, newProjectID } = useContext(Data);
     console.log('frontProjects', frontProjects)
     useEffect(_ => {
         if (frontProjects === null) {
@@ -23,14 +23,14 @@ export default function ProjectsList() {
             </div>
         );
     }
-    console.log(frontProjects);
+
 
 
     return (
         <section className="projects-list">
             <>
                 {
-                    frontProjects !== null ? <ProjectItem id={frontProjects.id} title={frontProjects.title} content={frontProjects.content} fullAmount={frontProjects.amountGoal} collectedAmount={0} image={frontProjects.image.src} /> : ''
+                    frontProjects !== null ? <ProjectItem id={newProjectID.current} title={frontProjects.title} content={frontProjects.content} fullAmount={frontProjects.amountGoal} collectedAmount={0} image={frontProjects.image.src} /> : ''
                 }
                 {
                     projects.map(p => <ProjectItem key={p.id} id={p.id} title={p.title} content={p.content} fullAmount={p.amount_goal} collectedAmount={p.amount_collected} image={p.image} />)

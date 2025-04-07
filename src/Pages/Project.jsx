@@ -8,9 +8,13 @@ import DonateModal from "../Components/DonateModal";
 export default function Project() {
     let { pid } = useParams();
 
-    const { project, setProjectID, projectDonations, setDonationsAmount } = useContext(Data);
+
+    const { project, setProjectID, projectDonations, setDonationsAmount, newDonationAmount } = useContext(Data);
     const [donateModal, setDonateModal] = useState(false);
     const showDonateModal = () => setDonateModal(!donateModal);
+
+
+    console.log(newDonationAmount.current)
 
     useEffect(_ => {
         setProjectID(pid);
@@ -44,6 +48,8 @@ export default function Project() {
         } else {
             const fullAmount = project[0].amount_goal;
             const collectedAmount = project[0].amount_collected;
+
+            const newCollectedAmount = parseInt(collectedAmount) + newDonationAmount.current.total;
             return (
                 <>
                     <div className="project-container">
@@ -61,7 +67,7 @@ export default function Project() {
 
                             <div className="donations">
                                 <h2>Donations: </h2>
-                                <ProgressBar fullAmount={fullAmount} collectedAmount={collectedAmount} />
+                                <ProgressBar fullAmount={fullAmount} collectedAmount={newCollectedAmount} />
                                 {fullAmount <= collectedAmount ? <button className='disabled' >Donate</button> : <button onClick={showDonateModal}>Donate</button>}
 
                                 <h2>Recent Donators: </h2>

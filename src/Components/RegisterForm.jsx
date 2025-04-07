@@ -27,10 +27,10 @@ export default function RegisterForm() {
         } else {
             console.log('registration form submit', regFormData);
             setRegFormData(formDefaults);
-            setMessage('Registration submitted!')
+            setMessage('Registration sucessful, you can now LOGIN!')
             setTimeout(_ => {
                 setMessage('')
-            }, 3000)
+            }, 5000)
 
         }
 
@@ -43,7 +43,7 @@ export default function RegisterForm() {
                 <h1>Registration form:</h1>
                 <p>Please enter your info to register</p>
                 {
-                    message ? <div className="donate-modal-card-warning-message"> {message}</div> : ''
+                    message ? <div className="message"> {message}</div> : ''
                 }
                 {
                     warningMessage ? <div className="donate-modal-card-warning-message"> {warningMessage}</div> : ''

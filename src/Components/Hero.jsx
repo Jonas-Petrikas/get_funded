@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router';
 import './Components-style/Hero.scss';
+import hero from '../../src/assets/images/hero.png';
 
 
 export default function Hero() {
@@ -7,9 +8,10 @@ export default function Hero() {
         <section className="hero">
             <div className="header-bin wrapper">
                 <h1>
-                    Filler Hero text
+                    Make a Difference Today!
                 </h1>
-                <p>Filler hero paragraph</p>
+                <p>
+                    Start your fundraiser and rally your community <br /> to support  what matters most.</p>
                 <NavLink to='/create' end><button>start your fundraiser</button></NavLink>
             </div>
 

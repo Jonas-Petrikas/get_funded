@@ -20,6 +20,6 @@ export default function useProjects() {
             });
 
     }, [])
-
+    console.log(projects)
     return { projects, dispatchProjects }
 }

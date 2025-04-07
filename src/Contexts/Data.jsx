@@ -16,9 +16,9 @@ export const DataProvider = ({ children }) => {
     const { projects, dispatchProjects } = useProjects();
     // const { allProjects, setAllprojects } = useAllProjects()
     const { donations, dispatchDonations } = useDonations();
-    const { project, dispatchProject, setStoreProject } = useProject({ projectID });
+    const { project, dispatchProject, setStoreProject, newProjectID } = useProject({ projectID });
     const { projectDonations, dispatchProjectDonations } = useProjectDonations({ projectID, donationsAmount });
-    const { donation, setDonation } = useMakeDonations({ projectID });
+    const { donation, setDonation, newDonationAmount } = useMakeDonations({ projectID });
     const [frontProjects, setFrontProjects] = useState(null);
 
     return (
@@ -26,11 +26,11 @@ export const DataProvider = ({ children }) => {
             projects, dispatchProjects,
             // allProjects, setAllprojects,
             donations, dispatchDonations,
-            project, dispatchProject, setStoreProject,
+            project, dispatchProject, setStoreProject, newProjectID,
             projectID, setProjectID,
             projectDonations, dispatchProjectDonations,
             donationsAmount, setDonationsAmount,
-            donation, setDonation,
+            donation, setDonation, newDonationAmount,
             frontProjects, setFrontProjects
         }}>
             {children}

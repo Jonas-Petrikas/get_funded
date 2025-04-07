@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useState, useContext } from 'react';
+import { useReducer, useEffect, useState, useContext, useRef } from 'react';
 import * as C from '../Constants/main';
 import * as A from '../Constants/actions';
 import axios from 'axios';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 export default function useProject({ projectID }) {
     const [project, dispatchProject] = useReducer(projectReducer, null);
     const [storeProject, setStoreProject] = useState(null);
+    const newProjectID = useRef(0);
 
     const navigate = useNavigate();
 
@@ -36,6 +37,7 @@ export default function useProject({ projectID }) {
 
         axios.post(C.SERVER_URL + 'project/new', storeProject, { withCredentials: true })
             .then(res => {
+                newProjectID.current = res.data.result.insertId;
                 setTimeout(_ => {
                     navigate('/project/' + res.data.result.insertId)
                 }, 200)
@@ -46,5 +48,5 @@ export default function useProject({ projectID }) {
 
     }, [storeProject]);
 
-    return { project, dispatchProject, setStoreProject }
+    return { project, dispatchProject, setStoreProject, newProjectID }
 }

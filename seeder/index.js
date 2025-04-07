@@ -218,5 +218,45 @@ con.query(sql, [donations.map(donation => [donation.project_id, donation.amount,
     }
 });
 
+sql = `
+ALTER TABLE donations
+  ADD CONSTRAINT donations_ibfk_1 FOREIGN KEY (project_id) REFERENCES projects (id) ON DELETE CASCADE,
+  ADD CONSTRAINT donations_ibfk_2 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL;
+`
+con.query(sql, (err) => {
+    if (err) {
+        console.log('Donations table alter error', err);
+    } else {
+        console.log('Donations table was altered');
+    }
+});
+
+sql = `
+ALTER TABLE projects
+  ADD CONSTRAINT projects_ibfk_1 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL;
+`;
+
+con.query(sql, (err) => {
+    if (err) {
+        console.log('projects table alter error', err);
+    } else {
+        console.log('projects table was altered');
+    }
+});
+
+sql = `
+ALTER TABLE sessions
+  ADD CONSTRAINT sessions_ibfk_1 FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE;
+`;
+con.query(sql, (err) => {
+    if (err) {
+        console.log('sessions table alter error', err);
+    } else {
+        console.log('sessions table was altered');
+    }
+});
+
+
+
 
 con.end();

@@ -4,28 +4,44 @@
     align-items: center;
     height: 80vh;
     min-height: 350px;
-    background-color: aquamarine;
+    // background-color: aquamarine;
 
 }
 
 .header-bin {
-    background-color: aquamarine;
+    background-color: rgb(78, 155, 129);
     height: 100%;
-
+    background-image: url('../../src/assets/images/heroNew.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-blend-mode: darken, luminosity;
+    padding: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     row-gap: 40px;
     font-size: 1.5em;
-    margin-top: 100px;
+    margin-top: 50px;
+    text-align: center;
+    color: white;
+
+    h1 {
+        font-size: 50px;
+    }
+
+    p {
+        line-height: 40px;
+        font-size: 20px;
+    }
 
 
     button {
         font-size: 1.2em;
-        border: 4px solid;
+        border: 4px solid white;
         border-radius: 30px;
         padding: 10px 30px 10px 30px;
-
+        color: white;
     }
 
 
