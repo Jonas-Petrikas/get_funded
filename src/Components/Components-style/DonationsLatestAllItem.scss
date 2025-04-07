@@ -32,10 +32,17 @@
   }
 
   .donation-progress-bar {
-      min-width: 150px;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+
+      .progress-bar {
+          .progress-bar-percent {
+              font-size: 12px;
+
+          }
+
+      }
   }
 
 

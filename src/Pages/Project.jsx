@@ -13,8 +13,13 @@ export default function Project() {
     const [donateModal, setDonateModal] = useState(false);
     const showDonateModal = () => setDonateModal(!donateModal);
 
+    useEffect(_ => {
+        newDonationAmount.current.total = 0;
+    }, [])
+
 
     console.log(newDonationAmount.current)
+    console.log(project);
 
     useEffect(_ => {
         setProjectID(pid);
@@ -57,6 +62,12 @@ export default function Project() {
                             <img src={project[0].image}></img>
                         </div>
 
+                        {project[0].status === 'to_review' ?
+                            <div className="review-status">Project is waiting for review</div>
+                            : ''
+                        }
+
+
                         <div className="project-details">
                             <div className="project-info">
 
@@ -68,7 +79,7 @@ export default function Project() {
                             <div className="donations">
                                 <h2>Donations: </h2>
                                 <ProgressBar fullAmount={fullAmount} collectedAmount={newCollectedAmount} />
-                                {fullAmount <= collectedAmount ? <button className='disabled' >Donate</button> : <button onClick={showDonateModal}>Donate</button>}
+                                {fullAmount <= collectedAmount || project[0].status === 'to_review' ? <button className='disabled' >Donate</button> : <button onClick={showDonateModal}>Donate</button>}
 
                                 <h2>Recent Donators: </h2>
                                 {

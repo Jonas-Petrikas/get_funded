@@ -7,6 +7,15 @@
     align-items: center;
     width: 100%;
 
+    .review-status {
+        color: red;
+        border: 2px solid red;
+        width: 50%;
+        font-size: 20px;
+        text-align: center;
+        padding: 10px;
+    }
+
     .project-image-container {
         width: 110%;
         height: 500px;
@@ -25,6 +34,7 @@
         }
 
     }
+
 
 
 

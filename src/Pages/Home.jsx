@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import DonationsLatestAllList from "../Components/Donations/DonationsLatestAllList";
 import Hero from "../Components/Hero";
 import ProjectsList from "../Components/Projects/ProjectsList";
 
 export default function Home() {
+
+
     return (
         <>
             <Hero />

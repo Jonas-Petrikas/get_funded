@@ -296,7 +296,7 @@ app.get('/project/:pid', (req, res) => {
     pid = req.params.pid;
 
     const sql = `
-    SELECT p.id, p.title, p.content, p.image, p.amount_goal, p.amount_collected, p.created_at, u.name as user_name
+    SELECT p.id, p.title, p.content, p.image, p.amount_goal, p.amount_collected, p.created_at, p.status, u.name as user_name
     FROM projects as p
     INNER JOIN users as u
     ON p.user_id = u.id

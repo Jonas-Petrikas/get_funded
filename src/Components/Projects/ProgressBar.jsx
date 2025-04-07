@@ -19,7 +19,7 @@ export default function ProgressBar({ fullAmount, collectedAmount }) {
                     <div className="progress-bar-collected" style={{ width: progress }}>
                     </div>
                 </div>
-                <span className='progress-bar-percent'>{(parseInt(progress)).toFixed(0)}% of the goal reached</span>
+                <span className='progress-bar-percent'>{(parseInt(progress)).toFixed(0)}% collected</span>
             </div>
         </div>
     )

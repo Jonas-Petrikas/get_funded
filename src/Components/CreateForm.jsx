@@ -35,7 +35,8 @@ export default function CreateForm() {
             title,
             content,
             amountGoal,
-            image
+            image,
+            status: user.role !== 'admin' ? 'to_review' : 'approved'
         };
         console.log(image)
         setStoreProject(newProject);

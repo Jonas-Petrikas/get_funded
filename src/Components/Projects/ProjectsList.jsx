@@ -6,7 +6,7 @@ import Data from "../../Contexts/Data";
 export default function ProjectsList() {
 
     const { projects, frontProjects, newProjectID } = useContext(Data);
-    console.log('frontProjects', frontProjects)
+
     useEffect(_ => {
         if (frontProjects === null) {
             return
@@ -15,11 +15,17 @@ export default function ProjectsList() {
 
     }, [frontProjects])
 
+    useEffect(_ => {
+        console.log('pasileido')
+
+
+    }, [])
+
 
     if (projects === null) {
         return (
             <div className="bin wrapper">
-                <h1>įrašai įkeliami...</h1>
+                <h1>Project loading...</h1>
             </div>
         );
     }
@@ -30,7 +36,7 @@ export default function ProjectsList() {
         <section className="projects-list">
             <>
                 {
-                    frontProjects !== null ? <ProjectItem id={newProjectID.current} title={frontProjects.title} content={frontProjects.content} fullAmount={frontProjects.amountGoal} collectedAmount={0} image={frontProjects.image.src} /> : ''
+                    frontProjects !== null && frontProjects.status !== 'to_review' && frontProjects.status !== 'disapproved' ? <ProjectItem id={newProjectID.current} title={frontProjects.title} content={frontProjects.content} fullAmount={frontProjects.amountGoal} collectedAmount={0} image={frontProjects.image.src} /> : ''
                 }
                 {
                     projects.map(p => <ProjectItem key={p.id} id={p.id} title={p.title} content={p.content} fullAmount={p.amount_goal} collectedAmount={p.amount_collected} image={p.image} />)
