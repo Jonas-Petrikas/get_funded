@@ -198,7 +198,7 @@ app.get('/projects/confirmed-list', (req, res) => {
     FROM projects
     WHERE status = 'approved' OR status = 'done'
     ORDER BY status, updated_at DESC, id DESC
-
+ 
 
 `;
 

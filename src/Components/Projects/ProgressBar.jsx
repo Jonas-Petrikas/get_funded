@@ -1,7 +1,8 @@
 import '../Components-style/ProgressBar.scss'
 
 export default function ProgressBar({ fullAmount, collectedAmount }) {
-    const progress = `${collectedAmount / fullAmount * 100}%`
+    const progress = `${collectedAmount / fullAmount > 1 ? 100 : collectedAmount / fullAmount * 100}%`
+
     return (
         <div className="progress-bar-container">
             <div className="progress-bar">

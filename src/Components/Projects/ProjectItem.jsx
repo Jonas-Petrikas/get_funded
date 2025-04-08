@@ -45,7 +45,7 @@ export default function ProjectItem({ id, title, fullAmount, collectedAmount, im
                     }
                 </div>
 
-                {fullAmount === collectedAmount ? <div className="finished">Collection Finished!</div> : ''}
+                {fullAmount <= collectedAmount ? <div className="finished">Collection Finished!</div> : ''}
 
             </div >
 
