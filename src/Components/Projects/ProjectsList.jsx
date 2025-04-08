@@ -5,7 +5,7 @@ import Data from "../../Contexts/Data";
 
 export default function ProjectsList() {
 
-    const { projects, frontProjects, newProjectID } = useContext(Data);
+    const { projects, frontProjects, newProjectID, setNeedUpdate } = useContext(Data);
 
     useEffect(_ => {
         if (frontProjects === null) {
@@ -15,8 +15,12 @@ export default function ProjectsList() {
 
     }, [frontProjects])
 
+
+
     useEffect(_ => {
-        console.log('pasileido')
+        console.log('užsikrovė')
+        setNeedUpdate(1)
+
 
 
     }, [])
@@ -35,9 +39,6 @@ export default function ProjectsList() {
     return (
         <section className="projects-list">
             <>
-                {
-                    frontProjects !== null && frontProjects.status !== 'to_review' && frontProjects.status !== 'disapproved' ? <ProjectItem id={newProjectID.current} title={frontProjects.title} content={frontProjects.content} fullAmount={frontProjects.amountGoal} collectedAmount={0} image={frontProjects.image.src} /> : ''
-                }
                 {
                     projects.map(p => <ProjectItem key={p.id} id={p.id} title={p.title} content={p.content} fullAmount={p.amount_goal} collectedAmount={p.amount_collected} image={p.image} />)
 

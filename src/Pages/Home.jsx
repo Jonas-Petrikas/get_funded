@@ -5,7 +5,6 @@ import ProjectsList from "../Components/Projects/ProjectsList";
 
 export default function Home() {
 
-
     return (
         <>
             <Hero />

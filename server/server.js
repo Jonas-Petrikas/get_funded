@@ -197,7 +197,7 @@ app.get('/projects/confirmed-list', (req, res) => {
     SELECT id, title, content, image, amount_goal, amount_collected, status
     FROM projects
     WHERE status = 'approved' OR status = 'done'
-    ORDER BY status, updated_at DESC
+    ORDER BY status, updated_at DESC, id DESC
 
 
 `;
@@ -233,7 +233,7 @@ app.get('/donations/home-show-latest', (req, res) => {
     ON u.id = d.user_id
     INNER JOIN projects AS p
     ON p.id = d.project_id
-    ORDER BY d.donated_at DESC
+    ORDER BY d.donated_at DESC, d.id DESC
     LIMIT ?
 `;
 
@@ -322,16 +322,24 @@ app.get('/project/:pid/donations/:donamount', (req, res) => {
     LEFT JOIN users AS u
     ON u.id = d.user_id
     WHERE d.project_id = ?
-    ORDER BY d.donated_at DESC
+    ORDER BY d.donated_at DESC, d.id DESC
     LIMIT ?
         `
 
     con.query(sqlDonations, [pid, parseInt(donationsAmount)], (err, result) => {
         if (err) return error500(res, err);
+        const sqlDonAmount = `
+        SELECT COUNT(*) as count FROM donations WHERE project_id = ?;
+            `;
+        con.query(sqlDonAmount, [pid], (err, count) => {
 
-        res.json({
-            success: true,
-            donations: result,
+
+            res.json({
+                success: true,
+                count: count[0].count,
+                donations: result,
+
+            });
         });
     });
 });

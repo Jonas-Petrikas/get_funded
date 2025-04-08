@@ -1,13 +1,21 @@
 
 import '../Components-style/DonationsLatestAllList.scss';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Data from "../../Contexts/Data.jsx";
 import LatestAllItem from './DonationsLatestAllItem.jsx';
 import ProgressBar from '../Projects/ProgressBar.jsx';
 
 export default function DonationsLatestAllList() {
 
-    const { donations } = useContext(Data);
+    const { donations, setUpdateDonations } = useContext(Data);
+
+
+    useEffect(_ => {
+        setUpdateDonations(1)
+    }, [])
+
+
+
 
 
 

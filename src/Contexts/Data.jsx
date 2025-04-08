@@ -13,22 +13,22 @@ export const DataProvider = ({ children }) => {
 
     const [projectID, setProjectID] = useState(null);
     const [donationsAmount, setDonationsAmount] = useState(5);
-    const { projects, dispatchProjects } = useProjects();
+    const { projects, dispatchProjects, needUpdate, setNeedUpdate } = useProjects();
     // const { allProjects, setAllprojects } = useAllProjects()
-    const { donations, dispatchDonations } = useDonations();
+    const { donations, dispatchDonations, setUpdateDonations } = useDonations();
     const { project, dispatchProject, setStoreProject, newProjectID } = useProject({ projectID });
-    const { projectDonations, dispatchProjectDonations } = useProjectDonations({ projectID, donationsAmount });
+    const { projectDonations, dispatchProjectDonations, setUpdateProjectDonations, projectDonationsCount } = useProjectDonations({ projectID, donationsAmount, });
     const { donation, setDonation, newDonationAmount } = useMakeDonations({ projectID });
     const [frontProjects, setFrontProjects] = useState(null);
 
     return (
         <Data.Provider value={{
-            projects, dispatchProjects,
+            projects, dispatchProjects, needUpdate, setNeedUpdate,
             // allProjects, setAllprojects,
-            donations, dispatchDonations,
+            donations, dispatchDonations, setUpdateDonations,
             project, dispatchProject, setStoreProject, newProjectID,
             projectID, setProjectID,
-            projectDonations, dispatchProjectDonations,
+            projectDonations, dispatchProjectDonations, setUpdateProjectDonations, projectDonationsCount,
             donationsAmount, setDonationsAmount,
             donation, setDonation, newDonationAmount,
             frontProjects, setFrontProjects

@@ -11,7 +11,7 @@ export default function CreateForm() {
     const [content, setContent] = useState('');
     const [amountGoal, setAmountGoal] = useState('');
     const { image, readFile } = useImage();
-    const { setStoreProject, storeProject, setFrontProjects } = useContext(Data);
+    const { setStoreProject, storeProject, setFrontProjects, setNeedUpdate } = useContext(Data);
     const { user } = useContext(Auth);
 
 
@@ -41,6 +41,7 @@ export default function CreateForm() {
         console.log(image)
         setStoreProject(newProject);
         setFrontProjects(newProject);
+        // setNeedUpdate(1);
     }
 
     useEffect(_ => {

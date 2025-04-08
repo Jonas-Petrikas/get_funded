@@ -8,7 +8,7 @@ import Data from "../Contexts/Data";
 export default function DonateModal({ showDonateModal, pid }) {
     const { user } = useContext(Auth);
 
-    const { setDonation } = useContext(Data);
+    const { setDonation, setUpdateProjectDonations } = useContext(Data);
     const [donorName, setDonorName] = useState(user.name);
     const [donationAmount, setDonationAmount] = useState(1);
 
@@ -40,6 +40,7 @@ export default function DonateModal({ showDonateModal, pid }) {
             project_id: pid
         });
         showDonateModal();
+        setUpdateProjectDonations(1);
 
 
     }

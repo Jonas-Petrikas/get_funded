@@ -9,7 +9,7 @@ export default function Project() {
     let { pid } = useParams();
 
 
-    const { project, setProjectID, projectDonations, setDonationsAmount, newDonationAmount } = useContext(Data);
+    const { project, setProjectID, projectDonations, setDonationsAmount, newDonationAmount, projectDonationsCount } = useContext(Data);
     const [donateModal, setDonateModal] = useState(false);
     const showDonateModal = () => setDonateModal(!donateModal);
 
@@ -77,7 +77,7 @@ export default function Project() {
                             </div>
 
                             <div className="donations">
-                                <h2>Donations: </h2>
+                                <h2>Donations ({projectDonationsCount.current}): </h2>
                                 <ProgressBar fullAmount={fullAmount} collectedAmount={newCollectedAmount} />
                                 {fullAmount <= collectedAmount || project[0].status === 'to_review' ? <button className='disabled' >Donate</button> : <button onClick={showDonateModal}>Donate</button>}
 
